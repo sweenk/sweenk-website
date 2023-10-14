@@ -1,6 +1,6 @@
-import "../styles/style.css";
-import "../styles/star.css";
-import "../styles/animate.css";
+import "@/styles/style.css";
+import "@/styles/star.css";
+import "@/styles/animate.css";
 import { Footer, Header } from "@/components";
 
 // This default export is required in a new `pages/_app.js` file.
