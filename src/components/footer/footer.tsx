@@ -41,7 +41,7 @@ export const Footer: FC = () => {
         <div className="flex flex-wrap justify-between">
           <div className="mb-10 max-w-[571px] w-full">
             <a className="mb-8.5 inline-block" href="index.html">
-              <Image src={LogoImage} alt="Logo" width={80} height={80} />
+              <img src={LogoImage} alt="Logo" width={80} height={80} />
             </a>
 
             {/* More code ... same as provided HTML */}

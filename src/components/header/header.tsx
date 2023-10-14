@@ -42,7 +42,7 @@ export const Header: React.FC = () => {
         {/* Logo and Hamburger Btn */}
         <div className="w-full lg:w-1/4 flex items-center justify-between">
           <a href="index.html">
-            <Image src={Logo} alt="Logo" />
+            <img src={Logo} alt="Logo" />
           </a>
 
           <button
