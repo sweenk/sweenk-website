@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { FC } from "react";
-import LogoImage from "@/assets/images/logo/logo.svg";
 const navLinks = {
   products: ["Features", "Integrations", "Pricing", "Changelog", "Roadmap"],
   company: ["Privacy Policy", "Refund Policy", "Support", "Community"],
@@ -41,7 +39,12 @@ export const Footer: FC = () => {
         <div className="flex flex-wrap justify-between">
           <div className="mb-10 max-w-[571px] w-full">
             <a className="mb-8.5 inline-block" href="index.html">
-              <img src={LogoImage} alt="Logo" width={80} height={80} />
+              <img
+                src="images/logo/logo.svg"
+                alt="Logo"
+                width={80}
+                height={80}
+              />
             </a>
 
             {/* More code ... same as provided HTML */}

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Logo from "@/assets/images/logo/logo.svg";
-import Image from "next/image";
 
 export const Header: React.FC = () => {
   const [stickyMenu, setStickyMenu] = useState(false);
@@ -42,7 +41,7 @@ export const Header: React.FC = () => {
         {/* Logo and Hamburger Btn */}
         <div className="w-full lg:w-1/4 flex items-center justify-between">
           <a href="index.html">
-            <img src={Logo} alt="Logo" />
+            <img src="images/logo/logo.svg" alt="Logo" />
           </a>
 
           <button
