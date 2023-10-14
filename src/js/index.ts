@@ -1,12 +1,12 @@
 // Import CSS files
 
-import "swiper/css";
+// import "swiper/css";
 
 // Import dependencies
 import persist from "@alpinejs/persist";
 import Alpine from "alpinejs";
 import WOW from "wowjs";
-import Swiper, { Autoplay } from "swiper";
+import Swiper from "swiper";
 
 // AlpineJS Setup
 Alpine.plugin(persist);
@@ -61,8 +61,8 @@ class Highlighter {
   }
 
   initContainer(): void {
-    this.containerSize.w = this.container.offsetWidth;
-    this.containerSize.h = this.container.offsetHeight;
+    // this.containerSize.w = this.container?.offsetWidth;
+    // this.containerSize.h = this.container?.offsetHeight;
   }
 
   onMouseMove(event: MouseEvent): void {
@@ -82,8 +82,8 @@ class Highlighter {
           -(box.getBoundingClientRect().left - rect.left) + this.mouse.x;
         const boxY =
           -(box.getBoundingClientRect().top - rect.top) + this.mouse.y;
-        box.style.setProperty("--mouse-x", `${boxX}px`);
-        box.style.setProperty("--mouse-y", `${boxY}px`);
+        // box.style.setProperty("--mouse-x", `${boxX}px`);
+        // box.style.setProperty("--mouse-y", `${boxY}px`);
       });
     }
   }
@@ -103,7 +103,7 @@ highlighters.forEach((highlighter) => {
 
 // Clients carousel
 const clientsCarousel = new Swiper(".clients-carousel", {
-  modules: [Autoplay],
+  // modules: [Autoplay],
   slidesPerView: "auto",
   spaceBetween: 64,
   loop: true,
