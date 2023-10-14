@@ -1,4 +1,4 @@
-// Import CSS files
+// Import CSS file
 
 // import "swiper/css";
 
