@@ -1,4 +1,5 @@
 import { FeaturesSection, HeroSection } from "@/sections";
+import { Pricing } from "@/sections/pricing/pricing";
 
 const featuresData = [
   {
@@ -49,6 +50,7 @@ export default function IndexPage() {
         description="Experience Innovation in News Consumption and Publishing"
         features={featuresData}
       />
+      <Pricing />
     </main>
   );
 }

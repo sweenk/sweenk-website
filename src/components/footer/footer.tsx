@@ -39,18 +39,17 @@ export const Footer: FC = () => {
         <div className="flex flex-wrap justify-between">
           <div className="mb-10 max-w-[571px] w-full">
             <a className="mb-8.5 inline-block" href="index.html">
-              <img
-                src="images/logo/logo.svg"
-                alt="Logo"
-                width={80}
-                height={80}
-              />
+              <img src="images/logo/logo.svg" alt="Logo" />
             </a>
 
-            {/* More code ... same as provided HTML */}
+            <p className="mb-12 xl:w-4/5">
+              We deeply value your insights. Every piece of feedback is crucial
+              to us. Reach out with your thoughts at:{" "}
+              <a href="mailto:hi@sweenk.com">hi@sweenk.com.</a>
+            </p>
 
             <p className="font-medium mt-5.5">
-              AI Tool, LLC. All rights reserved.
+              © 2023 Sweenk. All Rights Reserved.
             </p>
           </div>
 
