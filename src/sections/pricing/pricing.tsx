@@ -73,6 +73,7 @@ export const Pricing: React.FC<PricingProps> = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2  gap-15">
           <PricingBox
+            pricingIcon="./images/pricing/pricing-icon-01.svg"
             planName="Basic"
             price={0}
             features={["Feature one", "Feature two"]}
@@ -82,6 +83,7 @@ export const Pricing: React.FC<PricingProps> = () => {
             }}
           />
           <PricingBox
+            pricingIcon="./images/pricing/pricing-icon-02.svg"
             planName="Premium"
             price={9.99}
             features={["Feature one", "Feature two", "Feature three"]}

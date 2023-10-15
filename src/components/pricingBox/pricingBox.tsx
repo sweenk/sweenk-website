@@ -7,6 +7,7 @@ export const PricingBox: FC<PricingBoxProperties> = ({
   features,
   buttonText,
   buttonAction,
+  pricingIcon,
 }) => {
   const isFree = price === 0;
   const formattedPrice = isFree ? "FREE" : `$${price}`;
@@ -14,7 +15,7 @@ export const PricingBox: FC<PricingBoxProperties> = ({
   return (
     <div className="wow fadeInUp rounded-3xl bg-dark relative z-20 overflow-hidden pt-12.5 pb-10 px-8 xl:px-10 pricing-item-border">
       <span className="absolute right-9 top-9">
-        <img src="./images/pricing/pricing-icon-02.svg" alt="icon" />
+        <img src={pricingIcon} alt="icon" />
       </span>
 
       <h3 className="font-semibold text-heading-6 text-white mb-5.5">
