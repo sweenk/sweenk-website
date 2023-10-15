@@ -1,3 +1,5 @@
+import { Circles } from "@/components/circles/circles";
+import { GridRow } from "@/components/gridRow/gridRow";
 import { PricingBox } from "@/components/pricingBox/pricingBox";
 import React from "react";
 
@@ -54,6 +56,9 @@ export const Pricing: React.FC<PricingProps> = () => {
       id="pricing"
       className="relative z-20 overflow-hidden pt-22.5 lg:pt-27.5 xl:pt-32.5 scroll-mt-17"
     >
+      <Circles />
+      <GridRow />
+
       <div className="max-w-[800px] mx-auto px-4 sm:px-8 xl:px-0">
         <div className="wow fadeInUp mb-17.5 -mt-24 text-center z-10 relative">
           <span className="hero-subtitle-gradient relative mb-4 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full">
@@ -76,7 +81,12 @@ export const Pricing: React.FC<PricingProps> = () => {
             pricingIcon="./images/pricing/pricing-icon-01.svg"
             planName="Basic"
             price={0}
-            features={["Feature one", "Feature two"]}
+            features={[
+              "Unlimited News Titles",
+              "5 Daily Questions",
+              "Live News Access",
+              "Personalized Feed",
+            ]}
             buttonText="Choose plan"
             buttonAction={() => {
               console.log("Basic plan chosen");
@@ -86,7 +96,12 @@ export const Pricing: React.FC<PricingProps> = () => {
             pricingIcon="./images/pricing/pricing-icon-02.svg"
             planName="Premium"
             price={9.99}
-            features={["Feature one", "Feature two", "Feature three"]}
+            features={[
+              "Everything the Basic Plan Has",
+              "Unlimited Daily Questions",
+              "Voice Query & Reading",
+              "Early Access to New Features",
+            ]}
             buttonText="Choose plan"
             buttonAction={() => {
               console.log("Premium plan chosen");
