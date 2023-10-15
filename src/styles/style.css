@@ -104,6 +104,18 @@
     );
   }
 
+  .gradient-text {
+    background: -webkit-linear-gradient(
+        45deg,
+        #aff5b4 0.01%,
+        #a5d6ff 50.01%,
+        #a371f7 100%
+      ),
+      -webkit-linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
   .button-border-gradient {
     background: linear-gradient(
       180deg,
@@ -294,6 +306,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
   .pricing-gradient-divider {
     background: linear-gradient(
       270deg,
