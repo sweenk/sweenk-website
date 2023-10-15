@@ -1,6 +1,6 @@
 export interface PricingBoxProperties {
   planName: string;
-  price: string;
+  price: number;
   features: string[];
   buttonText: string;
   buttonAction?: () => void;

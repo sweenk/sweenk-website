@@ -54,7 +54,7 @@ export const Pricing: React.FC<PricingProps> = () => {
       id="pricing"
       className="relative z-20 overflow-hidden pt-22.5 lg:pt-27.5 xl:pt-32.5 scroll-mt-17"
     >
-      <div className="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+      <div className="max-w-[800px] mx-auto px-4 sm:px-8 xl:px-0">
         <div className="wow fadeInUp mb-17.5 -mt-24 text-center z-10 relative">
           <span className="hero-subtitle-gradient relative mb-4 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full">
             <img src="./images/hero/icon-title.svg" alt="icon" />
@@ -71,24 +71,24 @@ export const Pricing: React.FC<PricingProps> = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2  gap-15">
           <PricingBox
-            planName="Free"
-            price="0"
-            features={["Item first", "Item second"]}
-            buttonText="Get now"
+            planName="Basic"
+            price={0}
+            features={["Feature one", "Feature two"]}
+            buttonText="Choose plan"
+            buttonAction={() => {
+              console.log("Basic plan chosen");
+            }}
           />
           <PricingBox
-            planName="Free"
-            price="0"
-            features={["Item first", "Item second"]}
-            buttonText="Get now"
-          />
-          <PricingBox
-            planName="Free"
-            price="0"
-            features={["Item first", "Item second"]}
-            buttonText="Get now"
+            planName="Premium"
+            price={9.99}
+            features={["Feature one", "Feature two", "Feature three"]}
+            buttonText="Choose plan"
+            buttonAction={() => {
+              console.log("Premium plan chosen");
+            }}
           />
         </div>
       </div>
