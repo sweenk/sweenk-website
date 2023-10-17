@@ -25,9 +25,9 @@ export default function Document() {
         <link
           rel="mask-icon"
           href="favicon/safari-pinned-tab.svg"
-          color="#5bbad5"
+          color="#A371F7"
         />
-        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="msapplication-TileColor" content="#C4C6E7" />
         <meta name="theme-color" content="#ffffff" />
         <title>Sweenk - Personalized AI News Assistant</title>
       </Head>
