@@ -36,7 +36,7 @@ export const HeroSection: React.FC<HeroProps> = () => {
         <div className="text-center">
           <h1 className="text-white mb-6 text-3xl font-extrabold sm:text-5xl xl:text-heading-1">
             Welcome to Sweenk: Your Personalized{" "}
-            <span className="gradient-text">AI News</span> Companion
+            <span className="gradient-text">AI News</span> Assistant
           </h1>
           <p className="max-w-[500px] mx-auto mb-9 font-medium md:text-lg">
             Experience a Cutting-Edge, AI-Driven News Feed that Curates Content
