@@ -1,3 +1,4 @@
+import { Subscribe } from "@/components/subscribe/subscribe";
 import { FeaturesSection, HeroSection } from "@/sections";
 import { Pricing } from "@/sections/pricing/pricing";
 
@@ -51,6 +52,7 @@ export default function IndexPage() {
         features={featuresData}
       />
       <Pricing />
+      <Subscribe />
     </main>
   );
 }

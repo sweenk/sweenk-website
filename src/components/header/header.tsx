@@ -84,7 +84,8 @@ export const Header: React.FC = () => {
 
         {/* Navigation */}
         <div
-          className={`w-full lg:w-3/4 h-0 lg:h-auto invisible lg:visible lg:flex items-center justify-between ${
+          // rename justify-end to justify-between once you'll uncomment sign-in, sign-up
+          className={`w-full lg:w-3/4 h-0 lg:h-auto invisible lg:visible lg:flex items-center justify-end ${
             navigationOpen
               ? "!visible bg-dark shadow-lg relative !h-auto max-h-[400px] overflow-y-scroll rounded-md mt-4 p-7.5"
               : ""
@@ -107,7 +108,7 @@ export const Header: React.FC = () => {
           </nav>
 
           {/* Signin / Signup */}
-          <div className="flex items-center gap-6 mt-7 lg:mt-0">
+          {/* <div className="flex items-center gap-6 mt-7 lg:mt-0">
             <a
               href="signin.html"
               className="text-white text-sm hover:text-opacity-75"
@@ -119,9 +120,8 @@ export const Header: React.FC = () => {
               className="button-border-gradient relative rounded-lg text-white text-sm flex items-center gap-1.5 py-2 px-4.5 shadow-button hover:button-gradient-hover hover:shadow-none"
             >
               Sign up
-              {/* SVG */}
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     </header>

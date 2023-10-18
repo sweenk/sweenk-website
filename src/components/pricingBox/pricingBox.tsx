@@ -63,7 +63,9 @@ export const PricingBox: FC<PricingBoxProperties> = ({
         </svg>
       </a>
 
-      <p className="mt-4 text-sm text-center">No extra hidden charge</p>
+      {!isFree && (
+        <p className="mt-4 text-sm text-center">No extra hidden charge</p>
+      )}
 
       <div className="absolute -z-10 pointer-events-none inset-0 overflow-hidden">
         <span className="absolute left-0 bottom-0 -z-1">

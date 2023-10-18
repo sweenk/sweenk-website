@@ -6,51 +6,6 @@ import React from "react";
 interface PricingProps {}
 
 export const Pricing: React.FC<PricingProps> = () => {
-  const pricingItems = [
-    {
-      iconSrc: "./images/pricing/pricing-icon-01.svg",
-      title: "Starter",
-      price: "Free",
-      details: "/month (billed annually)",
-      features: [
-        "Subscription with levels",
-        "Advanced features included",
-        "Shared workspaces & tools",
-        "Premium versions functionality",
-        "Customizing the outputs",
-        "Priority customer support",
-      ],
-    },
-    {
-      iconSrc: "./images/pricing/pricing-icon-01.svg",
-      title: "Starter",
-      price: "$10",
-      details: "/month (billed annually)",
-      features: [
-        "Subscription with levels",
-        "Advanced features included",
-        "Shared workspaces & tools",
-        "Premium versions functionality",
-        "Customizing the outputs",
-        "Priority customer support",
-      ],
-    },
-    {
-      iconSrc: "./images/pricing/pricing-icon-01.svg",
-      title: "Starter",
-      price: "$10",
-      details: "/month (billed annually)",
-      features: [
-        "Subscription with levels",
-        "Advanced features included",
-        "Shared workspaces & tools",
-        "Premium versions functionality",
-        "Customizing the outputs",
-        "Priority customer support",
-      ],
-    },
-  ];
-
   return (
     <section
       id="pricing"
@@ -87,7 +42,7 @@ export const Pricing: React.FC<PricingProps> = () => {
               "Live News Access",
               "Personalized Feed",
             ]}
-            buttonText="Choose plan"
+            buttonText="Download App Now"
             buttonAction={() => {
               console.log("Basic plan chosen");
             }}
@@ -102,7 +57,7 @@ export const Pricing: React.FC<PricingProps> = () => {
               "Voice Query & Reading",
               "Early Access to New Features",
             ]}
-            buttonText="Choose plan"
+            buttonText="Download App Now"
             buttonAction={() => {
               console.log("Premium plan chosen");
             }}
