@@ -98,33 +98,6 @@ const userData: User[] = [
       "Finally, a news app that doesn't overwhelm me with information, but gives me exactly what I want.",
     ],
   },
-  {
-    name: "Gloria Thompson",
-    username: "gloria_t",
-    imageUrl: "./images/user/user-10.png",
-    comments: [
-      "I'm a big fan of Sweenk's design and functionality.",
-      "It's refreshing to see a news app that prioritizes user experience and feedback.",
-    ],
-  },
-  {
-    name: "Hugo Wallace",
-    username: "hugo_w",
-    imageUrl: "./images/user/user-11.png",
-    comments: [
-      "I've recommended Sweenk to all my friends and family. It's a must-have!",
-      "The interactive news conversations keep me hooked.",
-    ],
-  },
-  {
-    name: "Isabelle Ford",
-    username: "isabelle_f",
-    imageUrl: "./images/user/user-12.png",
-    comments: [
-      "Sweenk has made news consumption a fun activity for me.",
-      "Looking forward to more innovative features from the Sweenk team!",
-    ],
-  },
 ];
 
 export default function IndexPage() {
