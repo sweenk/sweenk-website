@@ -1,3 +1,5 @@
+import { Feedback } from "@/components/feedback/feedback";
+import { User } from "@/components/feedback/feedback.type";
 import { Subscribe } from "@/components/subscribe/subscribe";
 import { FeaturesSection, HeroSection } from "@/sections";
 import { Pricing } from "@/sections/pricing/pricing";
@@ -41,6 +43,90 @@ const featuresData = [
   },
 ];
 
+const userData: User[] = [
+  {
+    name: "Adison Dias",
+    username: "adison",
+    imageUrl: "./images/user/user-04.png",
+    comments: [
+      "Sweenk has completely revolutionized the way I consume news. It's like having a personal news assistant.",
+      "The interactive news conversations are a game-changer! Saves so much of my time.",
+    ],
+  },
+  {
+    name: "Benjamin Hart",
+    username: "benhart",
+    imageUrl: "./images/user/user-05.png",
+    comments: [
+      "Never thought I'd actually enjoy reading news until Sweenk came along.",
+      "The personalized feed based on my feedback is pure genius!",
+    ],
+  },
+  {
+    name: "Clara Oswald",
+    username: "clara_o",
+    imageUrl: "./images/user/user-06.png",
+    comments: [
+      "The user experience on Sweenk is unmatched. It truly understands my preferences.",
+      "Being able to talk to my news feed? That's futuristic!",
+    ],
+  },
+  {
+    name: "David Moore",
+    username: "davem",
+    imageUrl: "./images/user/user-07.png",
+    comments: [
+      "I've ditched all other news apps after using Sweenk.",
+      "It's AI-driven approach makes it stand out from the rest. Kudos to the team!",
+    ],
+  },
+  {
+    name: "Eva Green",
+    username: "evagreen",
+    imageUrl: "./images/user/user-08.png",
+    comments: [
+      "Sweenk offers the most engaging news consumption experience.",
+      "The accuracy of the news content based on my interests is spot-on!",
+    ],
+  },
+  {
+    name: "Francis Lopez",
+    username: "francis_lopez",
+    imageUrl: "./images/user/user-09.png",
+    comments: [
+      "Sweenk is the future of news.",
+      "Finally, a news app that doesn't overwhelm me with information, but gives me exactly what I want.",
+    ],
+  },
+  {
+    name: "Gloria Thompson",
+    username: "gloria_t",
+    imageUrl: "./images/user/user-10.png",
+    comments: [
+      "I'm a big fan of Sweenk's design and functionality.",
+      "It's refreshing to see a news app that prioritizes user experience and feedback.",
+    ],
+  },
+  {
+    name: "Hugo Wallace",
+    username: "hugo_w",
+    imageUrl: "./images/user/user-11.png",
+    comments: [
+      "I've recommended Sweenk to all my friends and family. It's a must-have!",
+      "The interactive news conversations keep me hooked.",
+    ],
+  },
+  {
+    name: "Isabelle Ford",
+    username: "isabelle_f",
+    imageUrl: "./images/user/user-12.png",
+    comments: [
+      "Sweenk has made news consumption a fun activity for me.",
+      "Looking forward to more innovative features from the Sweenk team!",
+    ],
+  },
+];
+
 export default function IndexPage() {
   return (
     <main>
@@ -52,6 +138,7 @@ export default function IndexPage() {
         features={featuresData}
       />
       <Pricing />
+      <Feedback users={userData} />
       <Subscribe />
     </main>
   );
