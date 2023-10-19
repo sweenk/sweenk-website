@@ -14,12 +14,11 @@ const navLinks = {
     // { text: "Support", href: "/support" },
     // { text: "Community", href: "/community" },
   ],
-  support: [
-    { text: "Features", href: "/features" },
-    { text: "Integrations", href: "/integrations" },
-    { text: "Pricing", href: "/pricing" },
-    { text: "Changelog", href: "/changelog" },
-    { text: "Roadmap", href: "/roadmap" },
+  more: [
+    { text: "Contact Us", href: "/contact" },
+    { text: "Join community", href: "https://discord.gg/fFQ7Q775" },
+    { text: "Pricing", href: "/#pricing" },
+    { text: "Github", href: "https://github.com/sweenk" },
   ],
 };
 
@@ -88,9 +87,9 @@ export const Footer: FC = () => {
               </div>
 
               <div>
-                <h5 className="font-semibold text-white mb-5">Support</h5>
+                <h5 className="font-semibold text-white mb-5">More</h5>
                 <ul className="flex flex-col gap-3.5">
-                  {renderNavLinks(navLinks.support)}
+                  {renderNavLinks(navLinks.more)}
                 </ul>
               </div>
             </div>
