@@ -111,7 +111,7 @@ export default function IndexPage() {
         features={featuresData}
       />
       <Pricing />
-      <Feedback users={userData} />
+      {/* <Feedback users={userData} /> */}
       <Subscribe />
     </main>
   );
