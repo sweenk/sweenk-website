@@ -8,7 +8,7 @@ const navLinks = {
   //   { text: "Changelog", href: "/changelog" },
   //   { text: "Roadmap", href: "/roadmap" },
   // ],
-  company: [
+  policies: [
     { text: "Privacy Policy", href: "/privacy-policy" },
     { text: "Terms And Conditions", href: "/terms-and-conditions" },
     // { text: "Support", href: "/support" },
@@ -81,9 +81,9 @@ export const Footer: FC = () => {
               </div> */}
 
               <div>
-                <h5 className="font-semibold text-white mb-5">Company</h5>
+                <h5 className="font-semibold text-white mb-5">Policies</h5>
                 <ul className="flex flex-col gap-3.5">
-                  {renderNavLinks(navLinks.company)}
+                  {renderNavLinks(navLinks.policies)}
                 </ul>
               </div>
 

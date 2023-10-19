@@ -44,7 +44,7 @@ export default function Document() {
         <meta property="og:type" content="website" />
         <meta
           property="og:image"
-          content="images/social-media/share-thumbnail.png"
+          content="./images/social-media/share-thumbnail.png"
         />
 
         <title>Sweenk - Personalized AI News Assistant</title>
