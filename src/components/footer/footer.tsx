@@ -1,18 +1,36 @@
 import { FC } from "react";
+
 const navLinks = {
-  products: ["Features", "Integrations", "Pricing", "Changelog", "Roadmap"],
-  company: ["Privacy Policy", "Refund Policy", "Support", "Community"],
-  support: ["Features", "Integrations", "Pricing", "Changelog", "Roadmap"],
+  // products: [
+  //   { text: "Features", href: "/features" },
+  //   { text: "Integrations", href: "/integrations" },
+  //   { text: "Pricing", href: "/pricing" },
+  //   { text: "Changelog", href: "/changelog" },
+  //   { text: "Roadmap", href: "/roadmap" },
+  // ],
+  company: [
+    { text: "Privacy Policy", href: "/privacy-policy" },
+    { text: "Terms And Conditions", href: "/terms-and-conditions" },
+    // { text: "Support", href: "/support" },
+    // { text: "Community", href: "/community" },
+  ],
+  support: [
+    { text: "Features", href: "/features" },
+    { text: "Integrations", href: "/integrations" },
+    { text: "Pricing", href: "/pricing" },
+    { text: "Changelog", href: "/changelog" },
+    { text: "Roadmap", href: "/roadmap" },
+  ],
 };
 
-const renderNavLinks = (links: string[]) => {
+const renderNavLinks = (links: { text: string; href: string }[]) => {
   return links.map((link, index) => (
     <li key={index}>
       <a
-        href="/#"
+        href={link.href}
         className="font-medium ease-in duration-300 hover:text-white"
       >
-        {link}
+        {link.text}
       </a>
     </li>
   ));
@@ -54,13 +72,13 @@ export const Footer: FC = () => {
           </div>
 
           <div className="max-w-[571px] w-full">
-            <div className="flex flex-col sm:flex-row sm:justify-between gap-10">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:justify-end gap-10">
+              {/* <div>
                 <h5 className="font-semibold text-white mb-5">Products</h5>
                 <ul className="flex flex-col gap-3.5">
                   {renderNavLinks(navLinks.products)}
                 </ul>
-              </div>
+              </div> */}
 
               <div>
                 <h5 className="font-semibold text-white mb-5">Company</h5>
