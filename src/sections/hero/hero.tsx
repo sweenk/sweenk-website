@@ -45,7 +45,7 @@ export const HeroSection: React.FC<HeroProps> = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-8 mb-9">
             <AppStore url="https://apps.apple.com/us/app/sweenk/id6463353960" />
-            <GooglePlay url="https://google.com" />
+            <GooglePlay url="https://play.google.com/store/apps/details?id=com.sweenk.app" />
           </div>
         </div>
       </div>
