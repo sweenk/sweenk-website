@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.subscribeToNewsletter = void 0;
-const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const functions = require("firebase-functions");
 admin.initializeApp();
-exports.subscribeToNewsletter = functions.https.onCall(async (data, context) => {
+exports.subscribeToNewsletter = functions
+    .region("us-west1")
+    .https.onCall(async (data, context) => {
     const email = data.email;
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         throw new functions.https.HttpsError("invalid-argument", "The function must be called with a valid email address.");
