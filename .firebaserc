@@ -1,5 +1,18 @@
 {
   "projects": {
-    "default": "sweenk-prod"
-  }
+    "default": "sweenk-production"
+  },
+  "targets": {
+    "sweenk-production-cloud": {
+      "hosting": {
+        "website-production": [
+          "sweenk-production-cloud"
+        ],
+        "sweenk-main-website": [
+          "sweenk-main-website"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
