@@ -1,13 +1,10 @@
 {
   "hosting": {
+    "target": "sweenk-main-website",
     "source": "src",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "frameworksBackend": {
-      "region": "us-central1"
+      "region": "us-west1"
     }
   }
 }
