@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "sweenk-production"
+    "default": "sweenk-production-cloud"
   },
   "targets": {
     "sweenk-production-cloud": {
