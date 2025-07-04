@@ -1,7 +1,7 @@
 {
   "hosting": {
     "target": "sweenk-main-website",
-    "source": "src",
+    "source": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
