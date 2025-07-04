@@ -24,7 +24,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SWEENK_PROD }}"
+          credentials_json: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SWEENK_STAGING }}"
 
       - name: Deploy Hosting to Firebase
         run: firebase deploy --only hosting:sweenk-main-website --project sweenk-production-cloud
