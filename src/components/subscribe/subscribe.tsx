@@ -24,7 +24,7 @@ export const Subscribe: FC = () => {
 
     try {
       const response = await fetch(
-        "https://us-west1-sweenk-staging-cloud.cloudfunctions.net/subscribe_to_newsletter",
+        "https://us-west1-sweenk-production-cloud.cloudfunctions.net/subscribe_to_newsletter",
         {
           method: "POST",
           headers: {
