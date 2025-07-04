@@ -1,5 +1,3 @@
-import { functions } from "@/lib/firebase";
-import { httpsCallable } from "firebase/functions";
 import React, { FC, useState } from "react";
 
 export const Subscribe: FC = () => {
@@ -25,11 +23,22 @@ export const Subscribe: FC = () => {
     setMessage(null);
 
     try {
-      const subscribeToNewsletter = httpsCallable(
-        functions,
-        "subscribeToNewsletter"
+      const response = await fetch(
+        "https://us-west1-sweenk-staging-cloud.cloudfunctions.net/subscribe_to_newsletter",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
       );
-      await subscribeToNewsletter({ email });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
 
       setMessage({
         type: "success",
