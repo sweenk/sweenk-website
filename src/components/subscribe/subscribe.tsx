@@ -37,6 +37,13 @@ export const Subscribe: FC = () => {
       );
 
       if (!response.ok) {
+        if (response.status === 409) {
+          setMessage({
+            type: "error",
+            text: "This email is already subscribed to our newsletter.",
+          });
+          return;
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
