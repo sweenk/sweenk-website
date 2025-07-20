@@ -13,7 +13,8 @@ export const Subscribe: FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
       setMessage({
         type: "error",
         text: "Please enter a valid email address.",
@@ -30,35 +31,43 @@ export const Subscribe: FC = () => {
         "subscribe_to_newsletter"
       );
 
-      const result = await subscribeToNewsletter({ email });
-      const data = result.data as { success: boolean; message: string };
+      await subscribeToNewsletter({ email: trimmedEmail.toLowerCase() });
 
-      if (data.success === false) {
-        setMessage({
-          type: "error",
-          text:
-            data.message ||
-            "This email is already subscribed to our newsletter.",
-        });
-      } else {
-        setMessage({
-          type: "success",
-          text: "Successfully subscribed! Thank you for joining us.",
-        });
-        setEmail("");
-      }
+      setMessage({
+        type: "success",
+        text: "Successfully subscribed! Thank you for joining us.",
+      });
+      setEmail("");
     } catch (error: any) {
       console.error("Subscription Error:", error);
-      // Handle Firebase Functions specific errors
+
       if (error.code === "functions/already-exists") {
         setMessage({
           type: "error",
           text: "This email is already subscribed to our newsletter.",
         });
       } else if (error.code === "functions/invalid-argument") {
+        const errorDetails = error.details;
+        if (errorDetails?.code === "MISSING_EMAIL") {
+          setMessage({
+            type: "error",
+            text: "Email address is required.",
+          });
+        } else if (errorDetails?.code === "INVALID_EMAIL_FORMAT") {
+          setMessage({
+            type: "error",
+            text: "Please enter a valid email address.",
+          });
+        } else {
+          setMessage({
+            type: "error",
+            text: "Please enter a valid email address.",
+          });
+        }
+      } else if (error.code === "functions/internal") {
         setMessage({
           type: "error",
-          text: "Please enter a valid email address.",
+          text: "Unable to subscribe at the moment. Please try again later.",
         });
       } else {
         setMessage({
