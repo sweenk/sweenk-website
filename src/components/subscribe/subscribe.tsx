@@ -30,13 +30,23 @@ export const Subscribe: FC = () => {
         "subscribe_to_newsletter"
       );
 
-      await subscribeToNewsletter({ email });
+      const result = await subscribeToNewsletter({ email });
+      const data = result.data as { success: boolean; message: string };
 
-      setMessage({
-        type: "success",
-        text: "Successfully subscribed! Thank you for joining us.",
-      });
-      setEmail("");
+      if (data.success === false) {
+        setMessage({
+          type: "error",
+          text:
+            data.message ||
+            "This email is already subscribed to our newsletter.",
+        });
+      } else {
+        setMessage({
+          type: "success",
+          text: "Successfully subscribed! Thank you for joining us.",
+        });
+        setEmail("");
+      }
     } catch (error: any) {
       console.error("Subscription Error:", error);
       // Handle Firebase Functions specific errors
