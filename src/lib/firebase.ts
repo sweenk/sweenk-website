@@ -13,7 +13,7 @@ const firebaseConfig = {
     process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ||
     "sweenk-production-cloud.appspot.com",
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -22,7 +22,7 @@ const functions = getFunctions(app, "us-west1");
 if (typeof window !== "undefined") {
   initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider(
-      "6LexfIkrAAAAANESVmprvqmr_fpgZyt1Jaf-iarK"
+      "6LdyiokrAAAAAAgeau1_Hm1YW1bact4CAS3TV_Yx"
     ),
     isTokenAutoRefreshEnabled: true,
   });
