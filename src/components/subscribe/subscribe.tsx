@@ -1,6 +1,6 @@
 import { httpsCallable } from "firebase/functions";
 import React, { FC, useState } from "react";
-import { functions } from "../../lib/firebase";
+import { firebasePromise } from "../../lib/firebase";
 
 export const Subscribe: FC = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +26,7 @@ export const Subscribe: FC = () => {
     setMessage(null);
 
     try {
+      const { functions } = await firebasePromise;
       const subscribeToNewsletter = httpsCallable(
         functions,
         "subscribe_to_newsletter"
