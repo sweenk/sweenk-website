@@ -30,8 +30,7 @@ export const Subscribe: FC = () => {
         "subscribe_to_newsletter"
       );
 
-      const result = await subscribeToNewsletter({ email: email });
-      const data = result.data;
+      await subscribeToNewsletter({ email });
 
       setMessage({
         type: "success",
@@ -39,6 +38,7 @@ export const Subscribe: FC = () => {
       });
       setEmail("");
     } catch (error: any) {
+      console.error("Subscription Error:", error);
       // Handle Firebase Functions specific errors
       if (error.code === "functions/already-exists") {
         setMessage({
