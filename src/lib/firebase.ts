@@ -5,15 +5,15 @@ import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
 const firebaseConfig = {
   projectId:
     process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "sweenk-production-cloud",
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyB1PApbcSavQI2FBKX5ggWbIsZW_yvcxAs",
   authDomain:
     process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ||
     "sweenk-production-cloud.firebaseapp.com",
   storageBucket:
     process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ||
-    "sweenk-production-cloud.appspot.com",
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
+    "sweenk-production-cloud.firebasestorage.app",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "491736400191",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:491736400191:web:d5b99460221ee41e79938a",
 };
 
 const app = initializeApp(firebaseConfig);
