@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check"; // <-- add this
 import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
 
 const firebaseConfig = {
@@ -18,6 +19,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const functions = getFunctions(app, "us-west1");
 
+if (typeof window !== "undefined") {
+  initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(
+      "6LdyiokrAAAAAAgeau1_Hm1YW1bact4CAS3TV_Yx"
+    ),
+    isTokenAutoRefreshEnabled: true,
+  });
+}
 // Connect to emulator in development
 if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {
   try {
