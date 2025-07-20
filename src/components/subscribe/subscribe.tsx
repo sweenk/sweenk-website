@@ -1,4 +1,6 @@
+import { httpsCallable } from "firebase/functions";
 import React, { FC, useState } from "react";
+import { functions } from "../../lib/firebase";
 
 export const Subscribe: FC = () => {
   const [email, setEmail] = useState("");
@@ -23,19 +25,12 @@ export const Subscribe: FC = () => {
     setMessage(null);
 
     try {
-      const response = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ data: { email } }),
-      });
+      const subscribeToNewsletter = httpsCallable(
+        functions,
+        "subscribe_to_newsletter"
+      );
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw result.error;
-      }
+      await subscribeToNewsletter({ email });
 
       setMessage({
         type: "success",
@@ -45,12 +40,12 @@ export const Subscribe: FC = () => {
     } catch (error: any) {
       console.error("Subscription Error:", error);
       // Handle Firebase Functions specific errors
-      if (error.code === "ALREADY_EXISTS") {
+      if (error.code === "functions/already-exists") {
         setMessage({
           type: "error",
           text: "This email is already subscribed to our newsletter.",
         });
-      } else if (error.code === "INVALID_ARGUMENT") {
+      } else if (error.code === "functions/invalid-argument") {
         setMessage({
           type: "error",
           text: "Please enter a valid email address.",
