@@ -1,3 +1,4 @@
+import { getFunctions, httpsCallable } from "firebase/functions";
 import React, { FC, useState } from "react";
 
 export const Subscribe: FC = () => {
@@ -23,31 +24,14 @@ export const Subscribe: FC = () => {
     setMessage(null);
 
     try {
-      const response = await fetch(
-        "https://us-west1-sweenk-production-cloud.cloudfunctions.net/subscribe_to_newsletter",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          mode: "cors",
-          body: JSON.stringify({ data: { email: email } }),
-        }
+      const functions = getFunctions();
+      const subscribeToNewsletter = httpsCallable(
+        functions,
+        "subscribe_to_newsletter"
       );
 
-      if (!response.ok) {
-        if (response.status === 409) {
-          setMessage({
-            type: "error",
-            text: "This email is already subscribed to our newsletter.",
-          });
-          return;
-        }
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
+      const result = await subscribeToNewsletter({ email: email });
+      const data = result.data;
 
       setMessage({
         type: "success",
@@ -58,7 +42,7 @@ export const Subscribe: FC = () => {
       console.error("Subscription error:", error);
       setMessage({
         type: "error",
-        text: error.message || "Something went wrong. Please try again later.",
+        text: "Unable to subscribe at the moment. Please try again later.",
       });
     } finally {
       setIsLoading(false);
