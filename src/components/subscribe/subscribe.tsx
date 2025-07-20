@@ -1,7 +1,6 @@
-import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { httpsCallable } from "firebase/functions";
 import React, { FC, useState } from "react";
-import { db, functions } from "../../lib/firebase";
+import { functions } from "../../lib/firebase";
 
 export const Subscribe: FC = () => {
   const [email, setEmail] = useState("");
@@ -32,18 +31,6 @@ export const Subscribe: FC = () => {
       );
 
       await subscribeToNewsletter({ email });
-
-      const dupSnap = await getDocs(
-        query(
-          collection(db, "subscribers"),
-          where("email", "==", email),
-          limit(1)
-        )
-      );
-      if (!dupSnap.empty) {
-        setMessage({ type: "error", text: "Already subscribed" });
-        return;
-      }
 
       setMessage({
         type: "success",
