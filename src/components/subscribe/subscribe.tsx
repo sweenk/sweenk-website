@@ -39,11 +39,26 @@ export const Subscribe: FC = () => {
       });
       setEmail("");
     } catch (error: any) {
-      console.error("Subscription error:", error);
-      setMessage({
-        type: "error",
-        text: "Unable to subscribe at the moment. Please try again later.",
-      });
+      // Log error code only, not full error details
+      console.error("Subscription failed:", error.code || "unknown-error");
+      
+      // Handle Firebase Functions specific errors
+      if (error.code === 'functions/already-exists') {
+        setMessage({
+          type: "error",
+          text: "This email is already subscribed to our newsletter.",
+        });
+      } else if (error.code === 'functions/invalid-argument') {
+        setMessage({
+          type: "error",
+          text: "Please enter a valid email address.",
+        });
+      } else {
+        setMessage({
+          type: "error",
+          text: "Unable to subscribe at the moment. Please try again later.",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
