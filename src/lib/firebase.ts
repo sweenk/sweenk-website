@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
-import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   projectId:
@@ -18,7 +17,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const functions = getFunctions(app, "us-west1");
-const db = getFirestore(app);
 
 // Connect to emulator in development
 if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {
@@ -30,4 +28,4 @@ if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {
   }
 }
 
-export { functions, db };
+export { functions };
