@@ -30,10 +30,7 @@ export const Subscribe: FC = () => {
         "subscribe_to_newsletter"
       );
 
-      const result = await subscribeToNewsletter({
-        email,
-        secret: process.env.NEXT_PUBLIC_FUNCTION_SECRET_KEY,
-      });
+      const result = await subscribeToNewsletter({ email });
       const data = result.data as { success: boolean; message: string };
 
       if (data.success === false) {
