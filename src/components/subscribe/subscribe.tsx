@@ -82,7 +82,7 @@ export const Subscribe: FC = () => {
   };
 
   return (
-    <section className="pt-17.5 sm:pt-22.5 xl:pt-27.5 pb-11 bg-white relative z-20">
+    <section className="pt-17.5 sm:pt-22.5 xl:pt-27.5 pb-11 bg-gray-50 relative z-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-8 xl:px-0">
         <div className="flex flex-wrap items-center justify-between gap-10">
           <div className="max-w-[352px] w-full">
