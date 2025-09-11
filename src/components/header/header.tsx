@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import Logo from "@/assets/images/logo/logo.svg";
 
 export const Header: React.FC = () => {
   const [stickyMenu, setStickyMenu] = useState(false);
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   // You might want to use a useState for page if its value changes dynamically
 
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [page, setPage] = React.useState("");
 
   const handleScroll = () => {
-    setStickyMenu(window.scrollY > 0);
+    const scrolled = window.scrollY > 20;
+    setStickyMenu(scrolled);
+    setIsScrolled(scrolled);
   };
 
   React.useEffect(() => {
@@ -31,17 +33,30 @@ export const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed left-0 top-0 w-full z-9999 py-7 lg:py-0 ${
-        stickyMenu
-          ? "bg-dark/70 backdrop-blur-lg shadow !py-4 lg:!py-0 transition duration-100 before:absolute before:w-full before:h-[1px] before:bottom-0 before:left-0 before:features-row-border"
-          : ""
+      className={`fixed left-0 top-0 w-full z-9999 py-7 lg:py-0 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white shadow-lg !py-4 lg:!py-0"
+          : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0 lg:flex items-center justify-between relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 xl:px-0 lg:flex items-center justify-between relative">
         {/* Logo and Hamburger Btn */}
         <div className="w-full lg:w-1/4 flex items-center justify-between">
-          <a href="index.html">
-            <img src="images/logo/logo.svg" alt="Logo" />
+          <a href="/" className="relative w-32 h-10">
+            <img 
+              src="/images/logo/sweenk_logo_horizontal_monochrome.svg" 
+              alt="Sweenk Logo" 
+              className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${
+                isScrolled ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <img 
+              src="/images/logo/sweenk_logo_horizontal_colorful.svg" 
+              alt="Sweenk Logo" 
+              className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${
+                isScrolled ? "opacity-100" : "opacity-0"
+              }`}
+            />
           </a>
 
           <button
@@ -51,29 +66,29 @@ export const Header: React.FC = () => {
             <span className="block relative cursor-pointer w-5.5 h-5.5">
               <span className="du-block absolute right-0 w-full h-full">
                 <span
-                  className={`block relative top-0 left-0 bg-white rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-[0] ${
+                  className={`block relative top-0 left-0 ${isScrolled ? 'bg-gray-900' : 'bg-white'} rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-[0] ${
                     !navigationOpen ? "!w-full delay-300" : ""
                   }`}
                 ></span>
                 <span
-                  className={`block relative top-0 left-0 bg-white rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-150 ${
+                  className={`block relative top-0 left-0 ${isScrolled ? 'bg-gray-900' : 'bg-white'} rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-150 ${
                     !navigationOpen ? "!w-full delay-400" : ""
                   }`}
                 ></span>
                 <span
-                  className={`block relative top-0 left-0 bg-white rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-200 ${
+                  className={`block relative top-0 left-0 ${isScrolled ? 'bg-gray-900' : 'bg-white'} rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-200 ${
                     !navigationOpen ? "!w-full delay-500" : ""
                   }`}
                 ></span>
               </span>
               <span className="du-block absolute right-0 w-full h-full rotate-45">
                 <span
-                  className={`block bg-white rounded-sm ease-in-out duration-200 delay-300 absolute left-2.5 top-0 w-0.5 h-full ${
+                  className={`block ${isScrolled ? 'bg-gray-900' : 'bg-white'} rounded-sm ease-in-out duration-200 delay-300 absolute left-2.5 top-0 w-0.5 h-full ${
                     !navigationOpen ? "!h-0 delay-[0]" : ""
                   }`}
                 ></span>
                 <span
-                  className={`block bg-white rounded-sm ease-in-out duration-200 delay-400 absolute left-0 top-2.5 w-full h-0.5 ${
+                  className={`block ${isScrolled ? 'bg-gray-900' : 'bg-white'} rounded-sm ease-in-out duration-200 delay-400 absolute left-0 top-2.5 w-full h-0.5 ${
                     !navigationOpen ? "!h-0 delay-200" : ""
                   }`}
                 ></span>
@@ -87,7 +102,7 @@ export const Header: React.FC = () => {
           // rename justify-end to justify-between once you'll uncomment sign-in, sign-up
           className={`w-full lg:w-3/4 h-0 lg:h-auto invisible lg:visible lg:flex items-center justify-end ${
             navigationOpen
-              ? "!visible bg-dark shadow-lg relative !h-auto max-h-[400px] overflow-y-scroll rounded-md mt-4 p-7.5"
+              ? `!visible ${isScrolled ? 'bg-white' : 'bg-dark'} shadow-lg relative !h-auto max-h-[400px] overflow-y-scroll rounded-md mt-4 p-7.5`
               : ""
           }`}
         >
@@ -97,8 +112,11 @@ export const Header: React.FC = () => {
                 <li key={index} className="nav__menu lg:py-7">
                   <a
                     href={item.href}
-                    className={`relative text-white/80 text-sm py-1.5 px-4 border border-transparent hover:text-white hover:nav-gradient 
-            ${page === item.activePage ? "!text-white nav-gradient" : ""}`}
+                    className={`relative text-sm font-semibold py-1.5 px-4 border border-transparent transition-colors duration-300 ${
+                      isScrolled 
+                        ? "text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg" 
+                        : "text-white hover:text-white hover:nav-gradient"
+                    } ${page === item.activePage ? (isScrolled ? "!text-gray-900 bg-gray-100" : "!text-white nav-gradient") : ""}`}
                   >
                     {item.label}
                   </a>
