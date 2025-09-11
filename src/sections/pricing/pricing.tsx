@@ -9,7 +9,7 @@ export const Pricing: React.FC<PricingProps> = () => {
   return (
     <section
       id="pricing"
-      className="relative z-20 overflow-hidden pt-22.5 lg:pt-27.5 xl:pt-32.5 scroll-mt-17"
+      className="relative z-20 overflow-hidden pt-22.5 lg:pt-27.5 xl:pt-32.5 scroll-mt-17 bg-white"
     >
       <Circles />
       <GridRow />
@@ -21,7 +21,7 @@ export const Pricing: React.FC<PricingProps> = () => {
 
             <span className="hero-subtitle-text"> Get access </span>
           </span>
-          <h2 className="text-white mb-4.5 text-2xl font-extrabold sm:text-4xl xl:text-heading-2">
+          <h2 className="text-gray-900 mb-4.5 text-2xl font-extrabold sm:text-4xl xl:text-heading-2">
             Our Pricing Plan
           </h2>
           <p className="max-w-[714px] mx-auto font-medium">

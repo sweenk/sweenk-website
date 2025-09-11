@@ -10,7 +10,7 @@ export const FeaturesSection: FC<FeaturesSectionProps> = ({
   return (
     <section
       id="features"
-      className="overflow-hidden pt-17.5 lg:pt-22.5 xl:pt-27.5 scroll-mt-17"
+      className="overflow-hidden pt-17.5 lg:pt-22.5 xl:pt-27.5 scroll-mt-17 bg-white relative z-20"
     >
       <div className="max-w-[1222px] mx-auto px-4 sm:px-8 xl:px-0">
         {/* Section Title */}
@@ -19,7 +19,7 @@ export const FeaturesSection: FC<FeaturesSectionProps> = ({
             <img src="./images/hero/icon-title.svg" alt="icon" />
             <span className="hero-subtitle-text">{subtitle}</span>
           </span>
-          <h2 className="text-white mb-4.5 text-2xl font-extrabold sm:text-4xl xl:text-heading-2">
+          <h2 className="text-gray-900 mb-4.5 text-2xl font-extrabold sm:text-4xl xl:text-heading-2">
             {title}
           </h2>
           <p className="max-w-[714px] mx-auto mb-5 font-medium">
@@ -48,7 +48,7 @@ export const FeaturesSection: FC<FeaturesSectionProps> = ({
                             <span className="icon-border relative max-w-[80px] w-full h-20 rounded-full inline-flex items-center justify-center mb-8 mx-auto">
                               <img src={innerFeature.icon} alt="icon" />
                             </span>
-                            <h4 className="font-semibold text-lg text-white mb-4">
+                            <h4 className="font-semibold text-lg text-gray-900 mb-4">
                               {innerFeature.title}
                             </h4>
                             <p className="font-medium">

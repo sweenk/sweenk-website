@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Overlay Effect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Method 1: Using CSS Transform Skew */
+        .hero-section-skew {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #fda085 100%);
+            overflow: hidden;
+        }
+
+        .angular-overlay-skew {
+            position: absolute;
+            bottom: 0;
+            left: -10%;
+            right: -10%;
+            height: 40%;
+            background: white;
+            transform: skewY(-3deg);
+            transform-origin: top left;
+        }
+
+        /* Method 2: Using Clip Path */
+        .hero-section-clip {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #FF512F 0%, #F09819 50%, #FF512F 100%);
+        }
+
+        .angular-overlay-clip {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: white;
+            clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Method 3: Using SVG */
+        .hero-section-svg {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+        }
+
+        .angular-overlay-svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            width: 100%;
+        }
+
+        /* Method 4: Using Pseudo Element */
+        .hero-section-pseudo {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(to right, #fc5c7d, #6a82fb);
+            overflow: hidden;
+        }
+
+        .hero-section-pseudo::after {
+            content: '';
+            position: absolute;
+            bottom: -5%;
+            left: -10%;
+            width: 120%;
+            height: 45%;
+            background: white;
+            transform: rotate(-4deg);
+            transform-origin: center;
+        }
+
+        /* Content styling */
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .dark-text {
+            color: #333;
+        }
+
+        p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .dark-p {
+            color: #666;
+        }
+
+        .method-label {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 20;
+        }
+
+        .section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Stripe-like exact method */
+        .hero-section-stripe {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(150deg, #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #0abde3 75%, #006ba6 100%);
+            overflow: hidden;
+        }
+
+        .angular-overlay-stripe {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to bottom, transparent 0%, transparent 20%, rgba(255,255,255,0.02) 20.5%, rgba(255,255,255,0.05) 21%, rgba(255,255,255,0.1) 22%, rgba(255,255,255,0.2) 24%, rgba(255,255,255,0.4) 28%, rgba(255,255,255,0.6) 32%, rgba(255,255,255,0.8) 38%, rgba(255,255,255,0.95) 45%, white 55%, white 100%);
+            transform: skewY(-6deg);
+            transform-origin: top right;
+        }
+
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#method1">Skew Transform</a>
+        <a href="#method2">Clip Path</a>
+        <a href="#method3">SVG</a>
+        <a href="#method4">Pseudo Element</a>
+        <a href="#method5">Stripe-like</a>
+    </nav>
+
+    <!-- Method 1: Transform Skew -->
+    <section id="method1" class="section hero-section-skew">
+        <div class="method-label">Method 1: CSS Transform Skew</div>
+        <div class="content">
+            <h1>Financial infrastructure<br>to grow your<br>revenue</h1>
+            <p>Join the millions of companies that use this angular overlay effect to create stunning hero sections with gradient backgrounds.</p>
+        </div>
+        <div class="angular-overlay-skew"></div>
+    </section>
+
+    <!-- Method 2: Clip Path -->
+    <section id="method2" class="section hero-section-clip">
+        <div class="method-label">Method 2: CSS Clip-Path</div>
+        <div class="content">
+            <h1>Modern Angular<br>Design Pattern</h1>
+            <p>Using clip-path for precise control over the angular shape. This method provides sharp, clean edges.</p>
+        </div>
+        <div class="angular-overlay-clip"></div>
+    </section>
+
+    <!-- Method 3: SVG -->
+    <section id="method3" class="section hero-section-svg">
+        <div class="method-label">Method 3: SVG Shape</div>
+        <div class="content">
+            <h1>Scalable Vector<br>Graphics Overlay</h1>
+            <p>Using SVG for maximum flexibility and browser compatibility. Perfect for complex shapes.</p>
+        </div>
+        <svg class="angular-overlay-svg" preserveAspectRatio="none" viewBox="0 0 100 100">
+            <polygon points="0,30 100,15 100,100 0,100" fill="white"/>
+        </svg>
+    </section>
+
+    <!-- Method 4: Pseudo Element -->
+    <section id="method4" class="section hero-section-pseudo">
+        <div class="method-label">Method 4: Pseudo Element</div>
+        <div class="content">
+            <h1>Clean CSS<br>Implementation</h1>
+            <p>Using ::after pseudo-element keeps HTML clean. The rotation creates the angular effect.</p>
+        </div>
+    </section>
+
+    <!-- Method 5: Stripe-like with gradient fade -->
+    <section id="method5" class="section hero-section-stripe">
+        <div class="method-label">Method 5: Stripe-like Gradient Fade</div>
+        <div class="content">
+            <h1 class="dark-text">Premium Feel<br>with Soft Transition</h1>
+            <p class="dark-p">This method uses a gradient within the overlay itself to create a soft transition from transparent to white, similar to Stripe's implementation.</p>
+        </div>
+        <div class="angular-overlay-stripe"></div>
+    </section>
+</body>
+</html>
