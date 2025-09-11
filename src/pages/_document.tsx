@@ -41,10 +41,18 @@ export default function Document() {
         />
 
         <title>Sweenk - Personalized AI News Assistant</title>
+        <script src="/Gradient.js"></script>
       </Head>
       <body x-data="{ page: 'home', 'loaded': true, 'stickyMenu': false, 'navigationOpen': false, 'scrollTop': false }">
+        <canvas id="gradient-canvas" style={{position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", zIndex: -1, pointerEvents: "none"}}></canvas>
         <Main />
         <NextScript />
+        <script dangerouslySetInnerHTML={{__html: `
+          if (typeof Gradient !== 'undefined') {
+            var gradient = new Gradient();
+            gradient.initGradient('#gradient-canvas');
+          }
+        `}} />
       </body>
     </Html>
   );

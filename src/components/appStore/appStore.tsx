@@ -16,7 +16,7 @@ export const AppStore: FC<AppStoreProperties> = ({
       rel="noopener noreferrer"
       className="inline-block"
     >
-      <div className="flex mt-3 w-48 h-14 bg-purple text-white rounded-lg items-center justify-center cursor-pointer transition-transform transform hover:scale-105">
+      <div className="flex mt-3 w-48 h-14 bg-purple hover:bg-purple-dark text-white rounded-lg items-center justify-center cursor-pointer transition-all transform hover:scale-105 shadow-lg">
         <div className="mr-3">
           <svg viewBox="0 0 384 512" width="30">
             <path

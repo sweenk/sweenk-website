@@ -20,7 +20,14 @@
   }
 
   body {
-    @apply font-plus-jakarta font-normal text-base text-dark-3 relative z-1 bg-dark;
+    @apply font-plus-jakarta font-normal text-base text-dark-3 relative z-1 bg-white;
+  }
+  
+  #gradient-canvas {
+    --gradient-color-1: #AFF5B4;
+    --gradient-color-2: #A5D6FF;
+    --gradient-color-3: #A371F7;
+    --gradient-color-4: #A371F7;
   }
 }
 
@@ -135,6 +142,10 @@
       -webkit-linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .hero-gradient-text {
+    color: #8646F4;
   }
 
   .button-border-gradient {
@@ -420,5 +431,56 @@
     @apply gradient-border bg-white/20;
     padding: 5px !important;
     z-index: 1 !important;
+  }
+
+  /* Angular White Overlay for Hero Section */
+  .angular-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .angular-overlay::after {
+    content: '';
+    position: absolute;
+    bottom: -50%;
+    left: -10%;
+    width: 120%;
+    height: 70%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.02) 20%,
+      rgba(255, 255, 255, 0.05) 25%,
+      rgba(255, 255, 255, 0.1) 30%,
+      rgba(255, 255, 255, 0.2) 35%,
+      rgba(255, 255, 255, 0.4) 45%,
+      rgba(255, 255, 255, 0.6) 55%,
+      rgba(255, 255, 255, 0.8) 65%,
+      rgba(255, 255, 255, 0.95) 75%,
+      white 85%,
+      white 100%
+    );
+    transform: skewY(-6deg);
+    transform-origin: bottom left;
+  }
+
+  @media (min-width: 768px) {
+    .angular-overlay::after {
+      transform: skewY(-8deg);
+      height: 75%;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .angular-overlay::after {
+      transform: skewY(-10deg);
+      height: 80%;
+    }
   }
 }
