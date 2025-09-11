@@ -1,6 +1,5 @@
 import { Feedback } from "@/components/feedback/feedback";
 import { User } from "@/components/feedback/feedback.type";
-import { Subscribe } from "@/components/subscribe/subscribe";
 import { FeaturesSection, HeroSection } from "@/sections";
 import { Pricing } from "@/sections/pricing/pricing";
 
@@ -114,7 +113,6 @@ export default function IndexPage() {
       />
       <Pricing />
       {/* <Feedback users={userData} /> */}
-      <Subscribe />
     </main>
   );
 }
