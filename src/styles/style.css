@@ -24,8 +24,8 @@
   }
   
   #gradient-canvas {
-    --gradient-color-1: #AFF5B4;
-    --gradient-color-2: #A5D6FF;
+    --gradient-color-1: #8FE594;  /* Slightly darker green (was #AFF5B4) */
+    --gradient-color-2: #85C6FF;  /* Slightly darker blue (was #A5D6FF) */
     --gradient-color-3: #A371F7;
     --gradient-color-4: #A371F7;
   }
@@ -145,7 +145,7 @@
   }
 
   .hero-gradient-text {
-    color: #8646F4;
+    color: #FFFFFF;
   }
 
   .button-border-gradient {
