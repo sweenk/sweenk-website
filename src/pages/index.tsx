@@ -7,39 +7,41 @@ import { Pricing } from "@/sections/pricing/pricing";
 const featuresData = [
   {
     icon: "./images/features/icon-01.svg",
-    title: "Precise Personalization",
+    title: "Personalized Topics",
     description:
-      "Experience a news feed uniquely tailored to your preferences with our advanced AI-driven personalization algorithm.",
+      "Content curated specifically for you based on your unique interests and preferences.",
   },
   {
     icon: "./images/features/icon-02.svg",
-    title: "Save Your Time",
+    title: "Tailored Content",
     description:
-      "Sweenk allows you to engage in news conversations, acquiring the essence without reading full articles.",
+      "Content delivered in a style that fits your preferences, from formality and detail level to emotional tone and engagement.",
   },
   {
     icon: "./images/features/icon-03.svg",
-    title: "Interactive News Conversations",
+    title: "Conversational",
     description:
-      "Explore news interactively and dive deep into stories with engaging, active news conversations.",
+      "Go beyond headlines—ask follow-ups, dive deeper, or get straight to what you care about.",
   },
   {
     icon: "./images/features/icon-04.svg",
-    title: "Uncover Pre-History and Context",
+    title: "Smart Timing",
     description:
-      "Go beyond the headlines and understand the 'why' with insightful backstories and contextual information.",
+      "Updates delivered at the optimal frequency for each topic, ensuring you're always informed without feeling overwhelmed.",
   },
   {
     icon: "./images/features/icon-05.svg",
-    title: "Your Personal News Assistant",
+    title: "Daily/Weekly Podcast",
     description:
-      "Ask Sweenk about specific events or topics, making it your go-to personal news assistant.",
+      "Get your personalized news delivered as an AI-generated podcast, perfect for your commute or workout.",
+    comingSoon: true,
   },
   {
     icon: "./images/features/icon-06.svg",
-    title: "Receive News That Matters",
+    title: "Social Media Trends",
     description:
-      "Stay informed with a feed that's not just news, but a curated selection resonating with your interests.",
+      "Stay ahead with real-time analysis of trending topics across social media platforms.",
+    comingSoon: true,
   },
 ];
 
