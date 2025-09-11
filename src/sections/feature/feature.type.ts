@@ -2,6 +2,7 @@ export interface Feature {
   icon: string;
   title: string;
   description: string;
+  comingSoon?: boolean;
 }
 
 export interface FeaturesSectionProps {
