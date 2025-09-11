@@ -15,13 +15,13 @@ export const HeroSection: React.FC<HeroProps> = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="text-left">
             <h1 className="mb-6 text-3xl font-extrabold sm:text-5xl xl:text-heading-1" style={{ color: '#000000' }}>
-              Welcome to Sweenk: Your Personalized{" "}
+              Your Personalized{" "}
               <span className="hero-gradient-text">AI News</span> Assistant
             </h1>
             <p className="max-w-[500px] mb-9 font-medium md:text-lg" style={{ color: '#000000' }}>
-              Experience a Cutting-Edge, AI-Driven News Feed that Curates Content
-              Aligned with Your Interests, Ensuring You Stay Informed Without the
-              Clutter.
+              Cut through the noise. Sweenk intelligently collects, summarizes, and 
+              delivers personalized news updates—giving you only what matters in a 
+              fraction of the time.
             </p>
             <div className="flex flex-col sm:flex-row items-start gap-4 md:gap-8 mb-9">
               <AppStore url="https://apps.apple.com/us/app/sweenk/id6463353960" />
