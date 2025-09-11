@@ -12,7 +12,7 @@ export const FeaturesSection: FC<FeaturesSectionProps> = ({
       id="features"
       className="overflow-hidden pt-17.5 lg:pt-22.5 xl:pt-27.5 scroll-mt-17 bg-white relative z-20"
     >
-      <div className="max-w-[1222px] mx-auto px-4 sm:px-8 xl:px-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 xl:px-0">
         {/* Section Title */}
         <div className="wow fadeInUp text-center">
           <span className="hero-subtitle-gradient relative mb-4 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full">
