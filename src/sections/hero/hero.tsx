@@ -38,7 +38,7 @@ export const HeroSection: React.FC<HeroProps> = () => {
                 background: 'rgba(255, 255, 255, 0.95)',
                 borderRadius: '40px',
                 padding: '10px',
-                boxShadow: '0 50px 100px -20px rgba(50, 50, 93, 0.15), 0 30px 60px -30px rgba(0, 0, 0, 0.15), 0 0 120px rgba(255, 255, 255, 0.3)',
+                boxShadow: '0 20px 40px -15px rgba(50, 50, 93, 0.15), 0 10px 20px -10px rgba(0, 0, 0, 0.15)',
                 backdropFilter: 'blur(20px)',
               }}
             >
@@ -72,9 +72,9 @@ export const HeroSection: React.FC<HeroProps> = () => {
         </div>
       </div>
 
-      {/* White Background Angle */}
+      {/* Gray Background Angle */}
       <div 
-        className="absolute bg-white pointer-events-none"
+        className="absolute bg-gray-50 pointer-events-none"
         style={{
           bottom: '-50%',
           left: '-20%',

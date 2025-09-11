@@ -20,7 +20,7 @@
   }
 
   body {
-    @apply font-plus-jakarta font-normal text-base text-dark-3 relative z-1 bg-white;
+    @apply font-plus-jakarta font-normal text-base text-dark-3 relative z-1 bg-gray-50;
   }
   
   #gradient-canvas {
