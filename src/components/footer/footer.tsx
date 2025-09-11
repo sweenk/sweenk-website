@@ -50,7 +50,7 @@ export const Footer: FC = () => {
         <div className="w-full h-[13px] footer-bg-gradient"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 xl:px-0 relative pt-17.5">
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 xl:px-0 relative pt-17.5">
         <div className="w-full h-[1px] footer-divider-gradient absolute top-0 left-0"></div>
 
         <div className="flex flex-wrap justify-between">

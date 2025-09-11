@@ -39,7 +39,7 @@ export const Header: React.FC = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 xl:px-0 lg:flex items-center justify-between relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 xl:px-0 lg:flex items-center justify-between relative">
         {/* Logo and Hamburger Btn */}
         <div className="w-full lg:w-1/4 flex items-center justify-between">
           <a href="/" className="relative w-32 h-10">
