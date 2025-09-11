@@ -204,8 +204,8 @@ export const Pricing: React.FC<PricingProps> = () => {
               </li>
             </ul>
             
-            <button className="w-full py-3 px-6 rounded-lg border-2 border-gray-800 text-gray-800 font-semibold hover:bg-gray-50 transition-colors">
-              Contact Sales
+            <button className="w-full py-3 px-6 rounded-lg border-2 border-gray-300 text-gray-400 font-semibold bg-gray-50 cursor-not-allowed" disabled>
+              Coming Soon
             </button>
           </div>
         </div>
