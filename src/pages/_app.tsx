@@ -1,5 +1,6 @@
 import "@/styles/style.css";
 import "@/styles/star.css";
+import "@/styles/stars-green.css";
 import "@/styles/animate.css";
 import { Footer, Header } from "@/components";
 

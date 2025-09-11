@@ -1,0 +1,181 @@
+/* Typography System - Supports Georgian and English */
+
+/* Default (English) Typography */
+.hero-title {
+  @apply text-2xl font-bold lg:text-5xl pb-8;
+}
+
+.hero-title-primary {
+  font-weight: 700;
+}
+
+.hero-title-secondary {
+  font-family: var(--font-nothing);
+  font-weight: 400;
+}
+
+.hero-subtitle {
+  @apply text-xl pb-10 max-w-3xl mx-auto;
+}
+
+.section-title {
+  @apply text-3xl lg:text-4xl font-bold mb-4;
+}
+
+.section-subtitle {
+  @apply text-lg lg:text-xl text-gray-600 mb-8;
+}
+
+.body-text {
+  @apply text-base lg:text-lg text-gray-700;
+}
+
+.body-text-small {
+  @apply text-sm lg:text-base text-gray-600;
+}
+
+.button-text {
+  @apply text-base lg:text-lg font-medium;
+}
+
+.nav-link {
+  @apply text-gray-700 hover:text-black transition-colors;
+}
+
+/* Georgian Typography Overrides */
+.geo .hero-title {
+  @apply text-4xl lg:text-6xl pb-6;
+}
+
+.geo .hero-title-primary {
+  font-family: var(--font-noto-georgian);
+  font-size: 2.7rem;
+  font-weight: 600;
+}
+
+.geo .hero-title-secondary {
+  font-family: "DM Iakobi", sans-serif;
+  font-size: inherit;
+  font-weight: 600;
+}
+
+.geo .hero-subtitle {
+  @apply text-lg lg:text-xl text-gray-600 pb-10 max-w-4xl mx-auto;
+  line-height: 1.5;
+}
+
+.geo .section-title {
+  font-family: var(--font-noto-georgian);
+  @apply text-3xl lg:text-4xl mb-4;
+  font-weight: 600;
+}
+
+.geo .section-subtitle {
+  font-family: var(--font-noto-georgian);
+  @apply text-lg lg:text-xl text-gray-600 mb-8;
+  font-weight: 400;
+}
+
+.geo .body-text {
+  font-family: var(--font-noto-georgian);
+  @apply text-base lg:text-lg text-gray-700;
+  line-height: 1.7;
+}
+
+.geo .body-text-small {
+  font-family: var(--font-noto-georgian);
+  @apply text-sm lg:text-base text-gray-600;
+  line-height: 1.6;
+}
+
+.geo .button-text {
+  font-family: var(--font-noto-georgian);
+  @apply text-base lg:text-lg;
+  font-weight: 500;
+}
+
+.geo .nav-link {
+  font-family: var(--font-noto-georgian);
+  @apply text-gray-700 hover:text-black transition-colors;
+  font-weight: 500;
+}
+
+/* Special Classes for Mixed Content */
+.text-handwritten {
+  font-family: var(--font-nothing);
+}
+
+.geo .text-handwritten {
+  font-family: "DM Iakobi", sans-serif;
+}
+
+/* Utility Classes for Quick Font Application */
+.font-noto-geo {
+  font-family: var(--font-noto-georgian);
+}
+
+.font-iakobi {
+  font-family: "DM Iakobi", sans-serif;
+}
+
+.font-nikoladze {
+  font-family: "DM Niko Nikoladze", sans-serif;
+}
+
+.font-zviadi {
+  font-family: "DM Zviadi", sans-serif;
+}
+
+.font-mzeqala {
+  font-family: "Mzeqala", sans-serif;
+}
+
+.font-bpg-bold {
+  font-family: "BPG Nino Mtavruli Bold", sans-serif;
+}
+
+/* About section title styles */
+.about-title-primary {
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
+.about-title-secondary {
+  font-family: var(--font-nothing);
+  font-weight: 400;
+  font-size: 2.5rem;
+}
+
+/* Georgian about title styles */
+.geo .about-title-primary {
+  font-family: var(--font-noto-georgian);
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+
+.geo .about-title-secondary {
+  font-family: "DM Iakobi", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .geo .hero-title-primary {
+    font-size: 2rem;
+  }
+
+  .geo .hero-title-secondary {
+    font-size: 2.5rem;
+  }
+  
+  .about-title-primary,
+  .about-title-secondary {
+    font-size: 2rem;
+  }
+  
+  .geo .about-title-primary,
+  .geo .about-title-secondary {
+    font-size: 1.875rem;
+  }
+}
