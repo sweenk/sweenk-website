@@ -46,17 +46,20 @@ export const Pricing: React.FC<PricingProps> = () => {
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
           {/* Free Plan */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow relative">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Free</h3>
-              <div className="mb-4">
-                <span className="text-4xl font-bold text-gray-900">$0</span>
-                <span className="text-gray-600">/month</span>
+          <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow relative flex flex-col h-full">
+            <div className="p-8 pb-0 flex-grow">
+              {/* Invisible spacer to align with Premium badge */}
+              <div className="h-6 mb-2"></div>
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-gray-900">Free</h3>
+                <div className="mb-3">
+                  <span className="text-2xl font-bold text-gray-900">$0</span>
+                  <span className="text-gray-600">/month</span>
+                </div>
+                <p className="text-purple-600">Perfect for getting started</p>
               </div>
-              <p className="text-gray-600">Perfect for getting started</p>
-            </div>
-            
-            <ul className="space-y-4 mb-8">
+              
+              <ul className="space-y-4 min-h-[280px]">
               <li className="flex items-start">
                 <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -94,27 +97,34 @@ export const Pricing: React.FC<PricingProps> = () => {
                 <span className="text-gray-400">Social media trends</span>
               </li>
             </ul>
+            </div>
             
-            <button className="w-full py-3 px-6 rounded-lg border-2 border-purple-600 text-purple-600 font-semibold hover:bg-purple-50 transition-colors">
-              Get Started
-            </button>
+            <div className="p-8 pt-0 mt-auto">
+              <button className="w-full py-3 px-6 rounded-lg border-2 border-purple-600 text-purple-600 font-semibold hover:bg-purple-50 transition-colors">
+                Get Started
+              </button>
+            </div>
           </div>
 
           {/* Premium Plan - Larger */}
-          <div className="bg-white rounded-2xl p-10 shadow-xl hover:shadow-2xl transition-shadow relative border-2 border-purple-600 transform scale-105 md:-mt-4">
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+          <div className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-shadow relative transform scale-105 md:-mt-4 flex flex-col border-2 border-green-500" style={{height: 'calc(100% + 1rem)'}}>
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
               Most Popular
             </div>
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
-              <div className="mb-4">
-                <span className="text-4xl font-bold text-gray-900">$20</span>
-                <span className="text-gray-600">/month</span>
+            <div className="p-10 pb-0 flex-grow">
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-gray-900">Premium</h3>
+                <div className="mb-3">
+                  <span className="text-2xl font-bold text-gray-900">$10</span>
+                  <span className="text-gray-600">/month</span>
+                </div>
+                <p className="text-purple-600">For power users</p>
               </div>
-              <p className="text-gray-600">For power users</p>
-            </div>
-            
-            <ul className="space-y-4 mb-8">
+              
+              <ul className="space-y-4 min-h-[280px]">
               <li className="flex items-start">
                 <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -152,61 +162,68 @@ export const Pricing: React.FC<PricingProps> = () => {
                 <span className="text-gray-700">Early access to new features</span>
               </li>
             </ul>
-            
-            <button className="w-full py-3 px-6 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-colors">
-              Get Premium
-            </button>
-          </div>
-
-          {/* MCP Server Plan */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow relative">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">For Enterprise</h3>
-              <p className="text-gray-600">First news MCP server for AI agents</p>
             </div>
             
-            <ul className="space-y-4 mb-8">
+            <div className="p-10 pt-0 mt-auto">
+              <button className="w-full py-3 px-6 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-colors">
+                Get Premium
+              </button>
+            </div>
+          </div>
+
+          {/* Professional Plan */}
+          <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow relative flex flex-col h-full">
+            <div className="p-8 pb-0 flex-grow">
+              {/* Invisible spacer to align with Premium badge */}
+              <div className="h-6 mb-2"></div>
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-gray-900">Professional</h3>
+                <div className="mb-3">
+                  <span className="text-2xl font-bold text-gray-900">$20</span>
+                  <span className="text-gray-600">/month</span>
+                </div>
+                <p className="text-purple-600">Focus on your special niche</p>
+              </div>
+              
+              <ul className="space-y-4 min-h-[280px]">
               <li className="flex items-start">
                 <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-700">Stream of latest articles</span>
+                <span className="text-gray-700">Everything in Premium</span>
               </li>
               <li className="flex items-start">
                 <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-700">Breaking news alerts</span>
+                <span className="text-gray-700">Track stock market trends</span>
               </li>
               <li className="flex items-start">
                 <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-700">Sentiment analysis</span>
+                <span className="text-gray-700">Crypto market insights</span>
               </li>
               <li className="flex items-start">
                 <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-700">Semantic search</span>
+                <span className="text-gray-700">AI breakthroughs tracking</span>
               </li>
               <li className="flex items-start">
                 <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="text-gray-700">Trends & analytics</span>
-              </li>
-              <li className="flex items-start">
-                <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-gray-700">API access & integration</span>
+                <span className="text-gray-700">Custom niche selection</span>
               </li>
             </ul>
+            </div>
             
-            <button className="w-full py-3 px-6 rounded-lg border-2 border-gray-300 text-gray-400 font-semibold bg-gray-50 cursor-not-allowed" disabled>
-              Coming Soon
-            </button>
+            <div className="p-8 pt-0 mt-auto">
+              <button className="w-full py-3 px-6 rounded-lg border-2 border-purple-600 text-purple-600 font-semibold hover:bg-purple-50 transition-colors">
+                Get Professional
+              </button>
+            </div>
           </div>
         </div>
 
@@ -215,6 +232,63 @@ export const Pricing: React.FC<PricingProps> = () => {
           <p className="text-gray-500 text-sm">
             All plans include basic features. Upgrade anytime. Cancel anytime.
           </p>
+        </div>
+
+        {/* Enterprise Section - Horizontal */}
+        <div className="mt-16 bg-white/70 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <div className="mb-2">
+                <h3 className="text-2xl font-bold text-gray-900">For Enterprise</h3>
+              </div>
+              <p className="text-gray-600 mb-6">
+                <strong>First ever news MCP server for AI agents.</strong> Perfect for companies building AI-powered applications, research teams, and organizations requiring comprehensive news data infrastructure.
+              </p>
+              <button className="w-full py-3 px-6 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
+                Contact Sales
+              </button>
+            </div>
+            <div>
+              <ul className="grid grid-cols-2 gap-3">
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-gray-700 text-sm">Stream of latest articles</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-gray-700 text-sm">Breaking news alerts</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-gray-700 text-sm">Sentiment analysis</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-gray-700 text-sm">Semantic search</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-gray-700 text-sm">API & webhooks</span>
+                </li>
+                <li className="flex items-start">
+                  <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-gray-700 text-sm">Custom integrations</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
