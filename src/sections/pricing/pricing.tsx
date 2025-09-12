@@ -102,9 +102,14 @@ export const Pricing: React.FC<PricingProps> = () => {
             </div>
             
             <div className="p-8 pt-0 mt-auto">
-              <button className="w-full py-3 px-6 rounded-lg border-2 border-purple-600 text-purple-600 font-semibold hover:bg-purple-50 transition-colors">
+              <a 
+                href={process.env.NEXT_PUBLIC_APP_URL || 'https://app.sweenk.com/'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full py-3 px-6 rounded-lg border-2 border-purple-600 text-purple-600 font-semibold hover:bg-purple-50 transition-colors text-center"
+              >
                 Get Started
-              </button>
+              </a>
             </div>
           </div>
 
