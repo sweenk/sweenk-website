@@ -177,10 +177,10 @@ export const Footer: FC = () => {
           </div>
 
           {/* Navigation Columns */}
-          <div className="flex gap-16">
+          <div className="flex flex-col sm:flex-row gap-8 sm:gap-16">
             {/* Policies Column */}
             <div>
-              <h5 className="font-semibold text-white mb-5">Policies</h5>
+              <h5 className="font-semibold text-white mb-3 sm:mb-5">Policies</h5>
               <ul className="flex flex-col gap-3.5">
                 {renderNavLinks(navLinks.policies)}
               </ul>
@@ -188,7 +188,7 @@ export const Footer: FC = () => {
 
             {/* More Column */}
             <div>
-              <h5 className="font-semibold text-white mb-5">More</h5>
+              <h5 className="font-semibold text-white mb-3 sm:mb-5">More</h5>
               <ul className="flex flex-col gap-3.5">
                 {renderNavLinks(navLinks.more)}
               </ul>
