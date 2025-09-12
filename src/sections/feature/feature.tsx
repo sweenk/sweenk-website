@@ -64,7 +64,7 @@ export const FeaturesSection: FC<FeaturesSectionProps> = ({
             >
               {/* Coming Soon Label */}
               {feature.comingSoon && (
-                <span className="absolute top-4 right-4 bg-purple-100 text-purple-700 text-xs font-semibold px-2 py-1 rounded-full">
+                <span className="absolute top-4 right-4 bg-gray-100 text-gray-500 text-xs font-normal px-3 py-1 rounded-full">
                   Coming Soon
                 </span>
               )}
@@ -75,7 +75,7 @@ export const FeaturesSection: FC<FeaturesSectionProps> = ({
               </div>
               
               {/* Content */}
-              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center group-hover:text-purple-600 transition-colors">
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">
                 {feature.title}
               </h3>
               <p className="text-gray-600 leading-relaxed text-center">
