@@ -1,0 +1,80 @@
+@tailwind base;
+
+@layer base {
+  /* Headings */
+  .typography-h1 {
+    @apply text-3xl lg:text-4xl font-bold text-gray-900 mb-6;
+  }
+  
+  .typography-h2 {
+    @apply text-2xl lg:text-3xl font-semibold text-gray-900 mb-5 mt-8;
+  }
+  
+  .typography-h3 {
+    @apply text-xl lg:text-2xl font-semibold text-gray-800 mb-4 mt-6;
+  }
+  
+  /* Body text */
+  .typography-body {
+    @apply text-base lg:text-lg text-gray-700 leading-relaxed mb-4;
+  }
+  
+  .typography-body-small {
+    @apply text-sm lg:text-base text-gray-600 leading-relaxed mb-3;
+  }
+  
+  /* Lists */
+  .typography-list {
+    @apply space-y-3 mb-6 ml-6;
+  }
+  
+  .typography-list-item {
+    @apply text-base lg:text-lg text-gray-700 leading-relaxed;
+  }
+  
+  .typography-list-item p {
+    @apply mb-0;
+  }
+  
+  /* Strong/Bold text */
+  .typography-strong {
+    @apply font-semibold text-gray-900;
+  }
+  
+  /* Content wrapper for legal pages */
+  .legal-content h1 {
+    @apply typography-h1;
+  }
+  
+  .legal-content h2 {
+    @apply typography-h2;
+  }
+  
+  .legal-content h3 {
+    @apply typography-h3;
+  }
+  
+  .legal-content p {
+    @apply typography-body;
+  }
+  
+  .legal-content ul {
+    @apply typography-list list-disc;
+  }
+  
+  .legal-content ol {
+    @apply typography-list list-decimal;
+  }
+  
+  .legal-content li {
+    @apply typography-list-item;
+  }
+  
+  .legal-content strong {
+    @apply typography-strong;
+  }
+  
+  .legal-content li p {
+    @apply text-base lg:text-lg text-gray-700 leading-relaxed mb-0;
+  }
+}

@@ -1,4 +1,5 @@
 import "@/styles/style.css";
+import "@/styles/typography.css";
 import "@/styles/star.css";
 import "@/styles/stars-green.css";
 import "@/styles/animate.css";
