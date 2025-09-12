@@ -27,6 +27,7 @@ const featuresData = [
     title: "Smart Timing",
     description:
       "Updates delivered at the optimal frequency for each topic, ensuring you're always informed without feeling overwhelmed.",
+    comingSoon: true,
   },
   {
     icon: "./images/features/icon-05.svg",
