@@ -136,18 +136,6 @@ const NewsletterForm: FC = () => {
 export const Footer: FC = () => {
   return (
     <footer className="relative z-10 pb-8 lg:pb-12 xl:pb-16">
-      <div className="absolute bottom-0 left-0 w-full flex flex-col gap-3 -z-1 opacity-50">
-        <div className="w-full h-[1.24px] footer-bg-gradient"></div>
-        <div className="w-full h-[2.47px] footer-bg-gradient"></div>
-        <div className="w-full h-[3.71px] footer-bg-gradient"></div>
-        <div className="w-full h-[4.99px] footer-bg-gradient"></div>
-        <div className="w-full h-[6.19px] footer-bg-gradient"></div>
-        <div className="w-full h-[7.42px] footer-bg-gradient"></div>
-        <div className="w-full h-[8.66px] footer-bg-gradient"></div>
-        <div className="w-full h-[9.90px] footer-bg-gradient"></div>
-        <div className="w-full h-[13px] footer-bg-gradient"></div>
-      </div>
-
       <div className="max-w-6xl mx-auto px-4 sm:px-8 xl:px-0 relative pt-17.5">
         <div className="w-full h-[1px] footer-divider-gradient absolute top-0 left-0"></div>
 
@@ -203,7 +191,7 @@ export const Footer: FC = () => {
         </div>
 
         {/* Copyright */}
-        <div className="pt-8 border-t border-white/10">
+        <div className="pt-8">
           <p className="font-medium text-white/70 text-center">
             © 2025 Sweenk. All rights reserved.
           </p>
