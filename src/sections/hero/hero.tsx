@@ -44,28 +44,109 @@ export const HeroSection: React.FC<HeroProps> = () => {
             >
               {/* Phone Screen */}
               <div 
-                className="w-full h-full"
+                className="w-full h-full overflow-hidden relative"
                 style={{
                   background: 'linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%)',
                   borderRadius: '30px',
                   border: '1px solid rgba(0, 0, 0, 0.05)',
                 }}
               >
-                {/* Notch */}
-                <div 
-                  className="mx-auto"
+                {/* News Content with Horizontal Scroll */}
+                <div className="relative w-full h-full">
+                  {/* Scrolling Container */}
+                  <div 
+                    className="flex animate-scroll-news h-full"
+                    style={{
+                      animation: 'scrollNews 9s ease-in-out infinite',
+                    }}
+                  >
+                    {/* News Item 1 */}
+                    <div className="flex-shrink-0 w-full h-full flex flex-col">
+                      <img 
+                        src="https://picsum.photos/320/240?random=1" 
+                        alt="AI Technology"
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="p-6 flex-1 flex flex-col">
+                        <div className="text-xs text-gray-500 mb-2">BBC News</div>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">
+                          AI Revolution: How Machine Learning is Transforming Industries
+                        </h3>
+                        <p className="text-sm text-gray-600 line-clamp-3 flex-1">
+                          Recent breakthroughs in artificial intelligence are reshaping how businesses operate, 
+                          with companies reporting unprecedented efficiency gains...
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* News Item 2 */}
+                    <div className="flex-shrink-0 w-full h-full flex flex-col">
+                      <img 
+                        src="https://picsum.photos/320/240?random=2" 
+                        alt="Startup Office"
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="p-6 flex-1 flex flex-col">
+                        <div className="text-xs text-gray-500 mb-2">TechCrunch</div>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">
+                          Startup Ecosystem Thrives Despite Economic Headwinds
+                        </h3>
+                        <p className="text-sm text-gray-600 line-clamp-3 flex-1">
+                          Venture capital firms continue to invest in promising startups, 
+                          focusing on sustainability and AI-driven solutions...
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* News Item 3 */}
+                    <div className="flex-shrink-0 w-full h-full flex flex-col">
+                      <img 
+                        src="https://picsum.photos/320/240?random=3" 
+                        alt="Climate Technology"
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="p-6 flex-1 flex flex-col">
+                        <div className="text-xs text-gray-500 mb-2">The Guardian</div>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">
+                          Climate Innovation: New Technologies Show Promise
+                        </h3>
+                        <p className="text-sm text-gray-600 line-clamp-3 flex-1">
+                          Scientists unveil groundbreaking carbon capture technology that could 
+                          revolutionize the fight against climate change...
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Duplicate first item for seamless loop */}
+                    <div className="flex-shrink-0 w-full h-full flex flex-col">
+                      <img 
+                        src="https://picsum.photos/320/240?random=1" 
+                        alt="AI Technology"
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="p-6 flex-1 flex flex-col">
+                        <div className="text-xs text-gray-500 mb-2">BBC News</div>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">
+                          AI Revolution: How Machine Learning is Transforming Industries
+                        </h3>
+                        <p className="text-sm text-gray-600 line-clamp-3 flex-1">
+                          Recent breakthroughs in artificial intelligence are reshaping how businesses operate, 
+                          with companies reporting unprecedented efficiency gains...
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Fixed Input at Bottom */}
+                <img 
+                  src="/images/mobile/input.svg" 
+                  alt="Input"
+                  className="absolute bottom-0 left-0 w-full z-10"
                   style={{
-                    width: '150px',
-                    height: '30px',
-                    background: 'white',
-                    borderRadius: '0 0 20px 20px',
-                    marginTop: '-1px',
+                    borderRadius: '0 0 30px 30px',
                   }}
                 />
-                {/* Content placeholder */}
-                <div className="p-6 pt-4">
-                  {/* Will add content later */}
-                </div>
               </div>
             </div>
           </div>

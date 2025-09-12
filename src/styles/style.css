@@ -347,6 +347,22 @@
       rgba(255, 255, 255, 0) 28.19%
     );
   }
+
+  /* News Scroll Animation - Pause and slide effect */
+  @keyframes scrollNews {
+    0%, 28% {
+      transform: translateX(0);
+    }
+    31%, 61% {
+      transform: translateX(-100%);
+    }
+    64%, 94% {
+      transform: translateX(-200%);
+    }
+    97%, 100% {
+      transform: translateX(-300%);
+    }
+  }
   .pricing-item-border:before {
     @apply gradient-border;
     background: linear-gradient(
