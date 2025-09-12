@@ -139,14 +139,13 @@ export const HeroSection: React.FC<HeroProps> = () => {
                 </div>
                 
                 {/* Fixed Input at Bottom */}
-                <img 
-                  src="/images/mobile/input.svg" 
-                  alt="Input"
-                  className="absolute bottom-0 left-0 w-full z-10"
-                  style={{
-                    borderRadius: '0 0 30px 30px',
-                  }}
-                />
+                <div className="absolute bottom-0 left-0 w-full z-10 px-4 pb-4">
+                  <img 
+                    src="/images/mobile/input.svg" 
+                    alt="Input"
+                    className="w-full"
+                  />
+                </div>
               </div>
             </div>
           </div>
