@@ -244,9 +244,9 @@ export const Pricing: React.FC<PricingProps> = () => {
               <p className="text-gray-600 mb-6">
                 <strong>First ever news MCP server for AI agents.</strong> Perfect for companies building AI-powered applications, research teams, and organizations requiring comprehensive news data infrastructure.
               </p>
-              <button className="w-full py-3 px-6 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
+              <a href="/contact-sales" className="block w-full py-3 px-6 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors text-center">
                 Contact Sales
-              </button>
+              </a>
             </div>
             <div>
               <ul className="grid grid-cols-2 gap-3">

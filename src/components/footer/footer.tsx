@@ -17,18 +17,21 @@ const navLinks = {
     // { text: "Community", href: "/community" },
   ],
   more: [
-    { text: "Contact Us", href: "/contact" },
-    { text: "Join community", href: "https://discord.gg/fFQ7Q775" },
+    { text: "Contact Us", href: "/support" },
+    { text: "Join community", href: "/community" },
     { text: "Pricing", href: "/#pricing" },
-    { text: "Github", href: "https://github.com/sweenk" },
+    { text: "For Enterprise", href: "/enterprise" },
+    { text: "Github", href: "https://github.com/sweenk", external: true },
   ],
 };
 
-const renderNavLinks = (links: { text: string; href: string }[]) => {
+const renderNavLinks = (links: { text: string; href: string; external?: boolean }[]) => {
   return links.map((link, index) => (
     <li key={index}>
       <a
         href={link.href}
+        target={link.external ? "_blank" : undefined}
+        rel={link.external ? "noopener noreferrer" : undefined}
         className="font-medium ease-in duration-300 text-white/80 hover:text-white"
       >
         {link.text}
@@ -163,10 +166,11 @@ export const Footer: FC = () => {
               <img src="/images/logo/sweenk_logo_horizontal_monochrome.svg" alt="Logo" className="h-8" />
             </a>
             <p className="text-white/80 text-sm max-w-[280px]">
-              We'd love if you chat with Sweenk for feedback, but hey, email works too!{" "}
-              <a href="mailto:hi@sweenk.com" className="text-white/80 hover:text-white underline">
-                hi@sweenk.com
-              </a>
+              We'd love if you chat with Sweenk for feedback, but hey,{" "}
+              <a href="/support" className="text-white/80 hover:text-white underline">
+                our support form
+              </a>{" "}
+              works too!
             </p>
           </div>
 
