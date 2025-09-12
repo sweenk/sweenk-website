@@ -91,10 +91,10 @@ export const Subscribe: FC = () => {
             </h3>
             <p className="font-medium">Early updates and exclusive content</p>
           </div>
-          <div className="max-w-[534px] w-full">
+          <div className="w-full sm:max-w-[534px]">
             <form onSubmit={handleSubmit}>
-              <div className="flex items-center gap-4">
-                <div className="max-w-[395px] w-full">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                <div className="w-full sm:max-w-[395px]">
                   <input
                     id="email"
                     type="email"
@@ -109,7 +109,7 @@ export const Subscribe: FC = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="button-border-gradient relative rounded-lg text-white text-sm flex items-center gap-1.5 py-3.5 px-7 shadow-button hover:button-gradient-hover hover:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="button-border-gradient relative rounded-lg text-white text-sm flex items-center justify-center gap-1.5 py-3.5 px-7 w-full sm:w-auto shadow-button hover:button-gradient-hover hover:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? "Subscribing..." : "Subscribe"}
                 </button>
