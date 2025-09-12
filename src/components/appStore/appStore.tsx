@@ -16,7 +16,7 @@ export const AppStore: FC<AppStoreProperties> = ({
       rel="noopener noreferrer"
       className="inline-block"
     >
-      <div className="flex mt-3 w-full sm:w-48 h-14 bg-purple hover:bg-purple-dark text-white rounded-lg items-center justify-center cursor-pointer transition-all transform hover:scale-105 shadow-lg">
+      <div className="flex mt-3 w-full sm:w-48 h-14 bg-purple hover:bg-purple-dark text-white rounded-lg items-center justify-center sm:justify-start sm:pl-4 cursor-pointer transition-all transform hover:scale-105 shadow-lg">
         <div className="mr-3">
           <svg viewBox="0 0 384 512" width="30">
             <path
@@ -25,7 +25,7 @@ export const AppStore: FC<AppStoreProperties> = ({
             />
           </svg>
         </div>
-        <div>
+        <div className="sm:text-left">
           <div className="text-xs">Download on the</div>
           <div className="text-2xl font-semibold font-sans -mt-1">
             {storeName}
