@@ -43,8 +43,10 @@ export const Pricing: React.FC<PricingProps> = () => {
           </p>
         </div>
 
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+        {/* Pricing Cards Container */}
+        <div className="w-full sm:max-w-lg sm:mx-auto lg:max-w-none">
+          {/* Pricing Cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
           {/* Free Plan */}
           <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow relative flex flex-col h-full">
             <div className="p-8 pb-0 flex-grow">
@@ -107,7 +109,7 @@ export const Pricing: React.FC<PricingProps> = () => {
           </div>
 
           {/* Premium Plan - Larger */}
-          <div className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-shadow relative transform scale-105 md:-mt-4 flex flex-col border-2 border-green-500" style={{height: 'calc(100% + 1rem)'}}>
+          <div className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-shadow relative transform lg:scale-105 lg:-mt-4 flex flex-col border-2 border-green-500 lg:h-[calc(100%+1rem)]">
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
@@ -165,9 +167,10 @@ export const Pricing: React.FC<PricingProps> = () => {
             </div>
             
             <div className="p-10 pt-0 mt-auto">
-              <button className="w-full py-3 px-6 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-colors">
+              <button className="w-full py-3 px-6 rounded-lg bg-purple-600/50 text-white font-semibold cursor-not-allowed" disabled>
                 Get Premium
               </button>
+              <p className="text-center text-gray-500 text-sm mt-2">Coming soon</p>
             </div>
           </div>
 
@@ -220,11 +223,13 @@ export const Pricing: React.FC<PricingProps> = () => {
             </div>
             
             <div className="p-8 pt-0 mt-auto">
-              <button className="w-full py-3 px-6 rounded-lg border-2 border-purple-600 text-purple-600 font-semibold hover:bg-purple-50 transition-colors">
+              <button className="w-full py-3 px-6 rounded-lg border-2 border-purple-600/50 text-purple-600/50 font-semibold cursor-not-allowed" disabled>
                 Get Professional
               </button>
+              <p className="text-center text-gray-500 text-sm mt-2">Coming soon</p>
             </div>
           </div>
+        </div>
         </div>
 
         {/* Bottom note */}
