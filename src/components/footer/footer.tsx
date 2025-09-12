@@ -13,7 +13,7 @@ const navLinks = {
   policies: [
     { text: "Privacy Policy", href: "/privacy-policy" },
     { text: "Terms And Conditions", href: "/terms-and-conditions" },
-    // { text: "Support", href: "/support" },
+    { text: "Support", href: "/support" },
     // { text: "Community", href: "/community" },
   ],
   more: [
@@ -135,7 +135,7 @@ const NewsletterForm: FC = () => {
 
 export const Footer: FC = () => {
   return (
-    <footer className="relative z-10 pb-8 lg:pb-12 xl:pb-16">
+    <footer className="relative z-10 pb-8 lg:pb-12 xl:pb-16 bg-transparent">
       <div className="max-w-6xl mx-auto px-4 sm:px-8 xl:px-0 relative pt-17.5">
         <div className="w-full h-[1px] footer-divider-gradient absolute top-0 left-0"></div>
 
