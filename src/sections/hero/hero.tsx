@@ -18,7 +18,7 @@ export const HeroSection: React.FC<HeroProps> = () => {
               Your Personalized{" "}
               <span className="hero-gradient-text">AI News</span> Assistant
             </h1>
-            <p className="max-w-[500px] mx-auto lg:mx-0 mb-6 sm:mb-8 lg:mb-9 text-sm sm:text-base font-medium md:text-lg px-4 sm:px-0" style={{ color: '#000000' }}>
+            <p className="max-w-[500px] mx-auto lg:mx-0 mb-6 sm:mb-8 lg:mb-9 text-base font-medium md:text-lg px-4 sm:px-0" style={{ color: '#000000' }}>
               Cut through the noise. Sweenk intelligently collects, summarizes, and 
               delivers personalized news updates—giving you only what matters in a 
               fraction of the time.
