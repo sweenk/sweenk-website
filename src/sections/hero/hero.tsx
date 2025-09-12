@@ -7,34 +7,32 @@ export const HeroSection: React.FC<HeroProps> = () => {
   return (
     <section
       id="home"
-      className="relative overflow-hidden z-10 pt-35 md:pt-40 xl:pt-45 pb-20"
+      className="relative overflow-hidden z-10 pt-20 sm:pt-28 md:pt-35 lg:pt-40 xl:pt-45 pb-16 md:pb-20"
     >
 
       {/* Hero Content */}
       <div className="mx-auto max-w-6xl px-4 sm:px-8 xl:px-0 relative z-1">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div className="text-left">
-            <h1 className="mb-6 text-3xl font-extrabold sm:text-5xl xl:text-heading-1" style={{ color: '#000000' }}>
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
+          <div className="text-center lg:text-left order-2 lg:order-1">
+            <h1 className="mb-4 sm:mb-6 text-2xl font-extrabold sm:text-3xl md:text-4xl lg:text-5xl xl:text-heading-1" style={{ color: '#000000' }}>
               Your Personalized{" "}
               <span className="hero-gradient-text">AI News</span> Assistant
             </h1>
-            <p className="max-w-[500px] mb-9 font-medium md:text-lg" style={{ color: '#000000' }}>
+            <p className="max-w-[500px] mx-auto lg:mx-0 mb-6 sm:mb-8 lg:mb-9 text-sm sm:text-base font-medium md:text-lg px-4 sm:px-0" style={{ color: '#000000' }}>
               Cut through the noise. Sweenk intelligently collects, summarizes, and 
               delivers personalized news updates—giving you only what matters in a 
               fraction of the time.
             </p>
-            <div className="flex flex-col sm:flex-row items-start gap-4 md:gap-8 mb-9">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center lg:justify-start gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8 lg:mb-9 w-full sm:w-auto">
               <AppStore url="https://apps.apple.com/us/app/sweenk/id6463353960" />
               <GooglePlay url="https://play.google.com/store/apps/details?id=com.sweenk.app" />
             </div>
           </div>
-          <div className="relative flex justify-center lg:justify-end">
+          <div className="relative flex justify-center lg:justify-end order-1 lg:order-2 w-full lg:w-auto">
             {/* Phone Frame Mockup */}
             <div 
-              className="relative"
+              className="relative w-[260px] h-[520px] sm:w-[280px] sm:h-[560px] md:w-[320px] md:h-[640px]"
               style={{
-                width: '320px',
-                height: '640px',
                 background: 'rgba(255, 255, 255, 0.95)',
                 borderRadius: '40px',
                 padding: '10px',
