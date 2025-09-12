@@ -150,9 +150,9 @@ export const HeroSection: React.FC<HeroProps> = () => {
         </div>
       </div>
 
-      {/* Gray Background Angle */}
+      {/* Gray Background Angle - Only visible on lg and above */}
       <div 
-        className="absolute bg-gray-50 pointer-events-none"
+        className="hidden lg:block absolute bg-gray-50 pointer-events-none"
         style={{
           bottom: '-50%',
           left: '-20%',
