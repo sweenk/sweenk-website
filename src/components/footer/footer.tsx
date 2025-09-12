@@ -98,8 +98,8 @@ const NewsletterForm: FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex items-stretch gap-3">
-        <div className="w-[280px]">
+      <div className="flex flex-col sm:flex-row items-stretch gap-3">
+        <div className="w-full sm:flex-1 md:w-[280px] md:flex-none">
           <input
             id="email"
             type="email"
@@ -114,7 +114,7 @@ const NewsletterForm: FC = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="rounded-lg bg-white text-black text-sm font-semibold py-3 px-6 hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="rounded-lg bg-white text-black text-sm font-semibold py-3 px-6 w-full sm:w-auto hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? "Subscribing..." : "Subscribe"}
         </button>
@@ -152,8 +152,10 @@ export const Footer: FC = () => {
                 </h3>
                 <p className="text-gray-700">Early updates and exclusive content</p>
               </div>
-              <div className="flex-1 flex justify-end">
-                <NewsletterForm />
+              <div className="flex-1 flex justify-start md:justify-end">
+                <div className="w-full md:w-auto">
+                  <NewsletterForm />
+                </div>
               </div>
             </div>
           </div>

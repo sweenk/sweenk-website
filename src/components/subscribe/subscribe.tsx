@@ -94,7 +94,7 @@ export const Subscribe: FC = () => {
           <div className="w-full sm:max-w-[534px]">
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                <div className="flex-1 sm:max-w-[395px]">
+                <div className="w-full sm:flex-1">
                   <input
                     id="email"
                     type="email"
