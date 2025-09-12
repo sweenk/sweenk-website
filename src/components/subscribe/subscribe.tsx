@@ -82,19 +82,19 @@ export const Subscribe: FC = () => {
   };
 
   return (
-    <section className="pt-17.5 sm:pt-22.5 xl:pt-27.5 pb-11">
-      <div className="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
-        <div className="flex flex-wrap items-center justify-between gap-10">
-          <div className="max-w-[352px] w-full">
-            <h3 className="font-semibold text-heading-5 text-white mb-2">
+    <section className="pt-17.5 sm:pt-22.5 xl:pt-27.5 pb-11 bg-gray-50 relative z-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 xl:px-0">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-6 sm:gap-10">
+          <div className="w-full sm:max-w-[352px]">
+            <h3 className="font-semibold text-heading-5 text-gray-900 mb-2">
               Stay Connected
             </h3>
             <p className="font-medium">Early updates and exclusive content</p>
           </div>
-          <div className="max-w-[534px] w-full">
+          <div className="w-full sm:max-w-[534px]">
             <form onSubmit={handleSubmit}>
-              <div className="flex items-center gap-4">
-                <div className="max-w-[395px] w-full">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                <div className="w-full sm:flex-1">
                   <input
                     id="email"
                     type="email"
@@ -109,7 +109,7 @@ export const Subscribe: FC = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="button-border-gradient relative rounded-lg text-white text-sm flex items-center gap-1.5 py-3.5 px-7 shadow-button hover:button-gradient-hover hover:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="button-border-gradient relative rounded-lg text-white text-sm flex items-center justify-center gap-1.5 py-3.5 px-7 w-full sm:w-auto sm:flex-shrink-0 shadow-button hover:button-gradient-hover hover:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? "Subscribing..." : "Subscribe"}
                 </button>

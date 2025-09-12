@@ -23,6 +23,9 @@ module.exports = {
       current: "currentColor",
       transparent: "transparent",
       white: "#FFFFFF",
+      primary: "#A371F7",  // Primary purple
+      secondary: "#AFF5B4", // Light green
+      tertiary: "#A5D6FF",  // Light blue
       dark: {
         DEFAULT: "#030014",
         2: "#495270",
@@ -31,7 +34,7 @@ module.exports = {
         5: "#BBBEC9",
       },
       purple: {
-        DEFAULT: "#8646F4",
+        DEFAULT: "#A371F7",
         dark: "#6D28D9",
         "dark-2": "#5B21B6",
         light: "#A78BFA",
@@ -39,6 +42,26 @@ module.exports = {
         "light-3": "#DDD6FE",
         "light-4": "#EDE9FE",
         "light-5": "#F5F3FF",
+        100: "#F3E8FF",
+        600: "#A371F7",
+        700: "#8B5CF6",
+      },
+      green: {
+        50: "#F0FDF4",
+        100: "#DCFCE7",
+        200: "#BBF7D0",
+        300: "#86EFAC",
+        400: "#4ADE80",
+        500: "#22C55E",
+        600: "#16A34A",
+      },
+      red: {
+        50: "#FEF2F2",
+        100: "#FEE2E2",
+        300: "#FCA5A5",
+        400: "#F87171",
+        500: "#EF4444",
+        600: "#DC2626",
       },
       pink: {
         DEFAULT: "#D345F8",
@@ -47,6 +70,18 @@ module.exports = {
         "light-2": "#EAA7FC",
         "light-3": "#F6D8FE",
         "light-4": "#FCF1FE",
+      },
+      gray: {
+        50: '#f9fafb',
+        100: '#f3f4f6',
+        200: '#e5e7eb',
+        300: '#d1d5db',
+        400: '#9ca3af',
+        500: '#6b7280',
+        600: '#4b5563',
+        700: '#374151',
+        800: '#1f2937',
+        900: '#111827',
       },
     },
     screens: {
