@@ -17,7 +17,7 @@
     "sweenk-staging-cloud": {
       "hosting": {
         "sweenk-main-website": [
-          "sweenk-main-website"
+          "sweenk-main-website-staging"
         ]
       }
     }
