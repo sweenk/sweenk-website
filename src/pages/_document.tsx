@@ -17,13 +17,13 @@ export default function Document() {
         {/* social media open graph */}
         <meta
           property="og:title"
-          content="Sweenk - Personalized AI News Assistant"
+          content="Your Personalized AI News Assistant"
         />
         <meta property="og:site_name" content="Sweenk" />
         <meta property="og:url" content="https://sweenk.com" />
         <meta
           property="og:description"
-          content="Discover Sweenk: The future of news consumption. Engage with personalized, AI-curated news through interactive conversations. No more long articles, just meaningful news dialogues tailored to your interests."
+          content="Cut through the noise. Sweenk intelligently collects, summarizes, and delivers personalized news updates—giving you only what matters in a fraction of the time."
         />
         <meta property="og:type" content="website" />
         <meta
@@ -31,7 +31,7 @@ export default function Document() {
           content="/images/og/og-main-banner.png"
         />
 
-        <title>Sweenk - Personalized AI News Assistant</title>
+        <title>Sweenk - Your Personalized AI News Assistant</title>
         <script src="/Gradient.js"></script>
       </Head>
       <body x-data="{ page: 'home', 'loaded': true, 'stickyMenu': false, 'navigationOpen': false, 'scrollTop': false }">
