@@ -1,6 +1,7 @@
 {
   "projects": {
-    "default": "sweenk-production-cloud"
+    "default": "sweenk-production-cloud",
+    "staging": "sweenk-staging-cloud"
   },
   "targets": {
     "sweenk-production-cloud": {
@@ -10,6 +11,13 @@
         ],
         "sweenk-main-website": [
           "sweenk-main-website"
+        ]
+      }
+    },
+    "sweenk-staging-cloud": {
+      "hosting": {
+        "sweenk-main-website": [
+          "sweenk-main-website-staging"
         ]
       }
     }
