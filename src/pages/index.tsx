@@ -1,5 +1,6 @@
 import { Feedback } from "@/components/feedback/feedback";
 import { User } from "@/components/feedback/feedback.type";
+import { Header } from "@/components/header/header";
 import { FeaturesSection, HeroSection } from "@/sections";
 import { Pricing } from "@/sections/pricing/pricing";
 
@@ -105,6 +106,7 @@ const userData: User[] = [
 export default function IndexPage() {
   return (
     <main>
+      <Header />
       <HeroSection />
       <FeaturesSection
         subtitle="The Power of GPT"

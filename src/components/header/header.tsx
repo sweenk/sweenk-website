@@ -1,12 +1,33 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-export const Header: React.FC = () => {
+interface MenuItem {
+  href: string;
+  label: string;
+  activePage?: string;
+}
+
+interface HeaderProps {
+  menuItems?: MenuItem[];
+  transparentOnScroll?: boolean;
+  alwaysTransparent?: boolean;
+}
+
+const defaultMenuItems: MenuItem[] = [
+  { href: "/#home", label: "Home", activePage: "home" },
+  { href: "/#features", label: "Features" },
+  { href: "/#pricing", label: "Pricing" },
+];
+
+export const Header: React.FC<HeaderProps> = ({ 
+  menuItems = defaultMenuItems,
+  transparentOnScroll = true,
+  alwaysTransparent = false
+}) => {
   const [stickyMenu, setStickyMenu] = useState(false);
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  // You might want to use a useState for page if its value changes dynamically
 
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [page, setPage] = React.useState("");
@@ -27,21 +48,26 @@ export const Header: React.FC = () => {
     };
   }, []);
 
-  const menuItems = [
-    { href: "/#home", label: "Home", activePage: "home" },
-    { href: "/#features", label: "Features" },
-    { href: "/#pricing", label: "Pricing" },
-  ];
+  // Determine background
+  let bgClass = "bg-white";
+  let pyClass = "!py-4 lg:!py-0";
+  
+  if (alwaysTransparent) {
+    bgClass = "bg-transparent";
+    pyClass = "py-7 lg:py-0";
+  } else if (transparentOnScroll && !isInnerPage) {
+    bgClass = isScrolled ? "bg-white shadow-lg" : "bg-transparent";
+    pyClass = isScrolled ? "!py-4 lg:!py-0" : "py-7 lg:py-0";
+  } else if (isInnerPage) {
+    bgClass = "bg-white";
+    pyClass = "!py-4 lg:!py-0";
+  }
+
+  const isHeaderWhite = alwaysTransparent ? false : (isInnerPage || (transparentOnScroll && isScrolled));
 
   return (
     <header
-      className={`${isInnerPage ? 'relative' : 'fixed'} left-0 top-0 w-full z-9999 py-7 lg:py-0 transition-all duration-300 ${
-        isInnerPage
-          ? "bg-white !py-4 lg:!py-0"
-          : isScrolled
-          ? "bg-white shadow-lg !py-4 lg:!py-0"
-          : "bg-transparent"
-      }`}
+      className={`${isInnerPage && !alwaysTransparent ? 'relative' : 'fixed'} left-0 top-0 w-full z-9999 transition-all duration-300 ${bgClass} ${pyClass}`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-8 xl:px-0 lg:flex items-center justify-between relative">
         {/* Logo and Hamburger Btn */}
@@ -51,14 +77,14 @@ export const Header: React.FC = () => {
               src="/images/logo/sweenk_logo_horizontal_monochrome.svg" 
               alt="Sweenk Logo" 
               className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${
-                isInnerPage || isScrolled ? "opacity-0" : "opacity-100"
+                isHeaderWhite ? "opacity-0" : "opacity-100"
               }`}
             />
             <img 
               src="/images/logo/sweenk_logo_horizontal_colorful.svg" 
               alt="Sweenk Logo" 
               className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${
-                isInnerPage || isScrolled ? "opacity-100" : "opacity-0"
+                isHeaderWhite ? "opacity-100" : "opacity-0"
               }`}
             />
           </a>
@@ -70,29 +96,29 @@ export const Header: React.FC = () => {
             <span className="block relative cursor-pointer w-5.5 h-5.5">
               <span className="du-block absolute right-0 w-full h-full">
                 <span
-                  className={`block relative top-0 left-0 ${isInnerPage || isScrolled ? 'bg-gray-900' : 'bg-white'} rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-[0] ${
+                  className={`block relative top-0 left-0 ${isHeaderWhite ? 'bg-gray-900' : 'bg-white'} rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-[0] ${
                     !navigationOpen ? "!w-full delay-300" : ""
                   }`}
                 ></span>
                 <span
-                  className={`block relative top-0 left-0 ${isScrolled ? 'bg-gray-900' : 'bg-white'} rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-150 ${
+                  className={`block relative top-0 left-0 ${isHeaderWhite ? 'bg-gray-900' : 'bg-white'} rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-150 ${
                     !navigationOpen ? "!w-full delay-400" : ""
                   }`}
                 ></span>
                 <span
-                  className={`block relative top-0 left-0 ${isScrolled ? 'bg-gray-900' : 'bg-white'} rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-200 ${
+                  className={`block relative top-0 left-0 ${isHeaderWhite ? 'bg-gray-900' : 'bg-white'} rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-200 ${
                     !navigationOpen ? "!w-full delay-500" : ""
                   }`}
                 ></span>
               </span>
               <span className="du-block absolute right-0 w-full h-full rotate-45">
                 <span
-                  className={`block ${isInnerPage || isScrolled ? 'bg-gray-900' : 'bg-white'} rounded-sm ease-in-out duration-200 delay-300 absolute left-2.5 top-0 w-0.5 h-full ${
+                  className={`block ${isHeaderWhite ? 'bg-gray-900' : 'bg-white'} rounded-sm ease-in-out duration-200 delay-300 absolute left-2.5 top-0 w-0.5 h-full ${
                     !navigationOpen ? "!h-0 delay-[0]" : ""
                   }`}
                 ></span>
                 <span
-                  className={`block ${isInnerPage || isScrolled ? 'bg-gray-900' : 'bg-white'} rounded-sm ease-in-out duration-200 delay-400 absolute left-0 top-2.5 w-full h-0.5 ${
+                  className={`block ${isHeaderWhite ? 'bg-gray-900' : 'bg-white'} rounded-sm ease-in-out duration-200 delay-400 absolute left-0 top-2.5 w-full h-0.5 ${
                     !navigationOpen ? "!h-0 delay-200" : ""
                   }`}
                 ></span>
@@ -106,7 +132,7 @@ export const Header: React.FC = () => {
           // rename justify-end to justify-between once you'll uncomment sign-in, sign-up
           className={`w-full lg:w-3/4 h-0 lg:h-auto invisible lg:visible lg:flex items-center justify-end ${
             navigationOpen
-              ? `!visible ${isInnerPage || isScrolled ? 'bg-white' : 'bg-dark'} shadow-lg relative !h-auto max-h-[400px] overflow-y-scroll rounded-md mt-4 p-7.5`
+              ? `!visible ${isHeaderWhite ? 'bg-white' : 'bg-dark'} shadow-lg relative !h-auto max-h-[400px] overflow-y-scroll rounded-md mt-4 p-7.5`
               : ""
           }`}
         >
@@ -117,10 +143,10 @@ export const Header: React.FC = () => {
                   <a
                     href={item.href}
                     className={`relative text-sm font-semibold py-1.5 px-4 border border-transparent transition-colors duration-300 ${
-                      isInnerPage || isScrolled 
+                      isHeaderWhite 
                         ? "text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg" 
                         : "text-white hover:text-white hover:nav-gradient"
-                    } ${page === item.activePage ? (isInnerPage || isScrolled ? "!text-gray-900 bg-gray-100" : "!text-white nav-gradient") : ""}`}
+                    } ${page === item.activePage ? (isHeaderWhite ? "!text-gray-900 bg-gray-100" : "!text-white nav-gradient") : ""}`}
                   >
                     {item.label}
                   </a>
