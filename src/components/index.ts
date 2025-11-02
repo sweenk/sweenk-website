@@ -3,3 +3,5 @@ export * from "./footer/footer";
 export * from "./googlePlay/googlePlay";
 export * from "./appStore/appStore";
 export * from "./layout/layout";
+export * from "./button/button";
+export * from "./input/input";
