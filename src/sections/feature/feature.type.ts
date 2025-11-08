@@ -1,5 +1,7 @@
+import { ReactElement } from "react";
+
 export interface Feature {
-  icon: string;
+  icon: string | ReactElement;
   title: string;
   description: string;
   comingSoon?: boolean;
