@@ -31,7 +31,6 @@ export default function Document() {
           content="/images/og/og-main-banner.png"
         />
 
-        <title>Sweenk - Your Personalized AI News Assistant</title>
         <script src="/Gradient.js"></script>
       </Head>
       <body x-data="{ page: 'home', 'loaded': true, 'stickyMenu': false, 'navigationOpen': false, 'scrollTop': false }">

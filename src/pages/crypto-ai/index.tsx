@@ -1,20 +1,19 @@
 import { Button } from "@/components/button/button";
 import { Card } from "@/components/card/card";
-import { CryptoSurvey } from "@/components/cryptoSurvey/cryptoSurvey";
-import { CryptoWaitlist } from "@/components/cryptoWaitlist/cryptoWaitlist";
 import { Header } from "@/components/header/header";
 import { Input } from "@/components/input/input";
 import { StepBadge } from "@/components/stepBadge/stepBadge";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function CryptoAIPage() {
-  const [waitlistSuccess, setWaitlistSuccess] = useState(false);
-  const [waitlistEmail, setWaitlistEmail] = useState("");
+import { CryptoWaitlist } from "./cryptoWaitlist";
+import { saveWaitlistEmail } from "./utils/waitlist";
 
-  const handleWaitlistSuccess = (email: string) => {
-    setWaitlistEmail(email);
-    setWaitlistSuccess(true);
-  };
+export default function CryptoAIPage() {
+  const router = useRouter();
+  const [heroEmail, setHeroEmail] = useState("");
+  const [heroError, setHeroError] = useState<string | null>(null);
+  const [isHeroSubmitting, setIsHeroSubmitting] = useState(false);
 
   const cryptoMenuItems = [
     { href: "/", label: "Home" },
@@ -84,20 +83,26 @@ export default function CryptoAIPage() {
 
             {/* Hero Email Form */}
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
-                const email = (e.currentTarget.email as HTMLInputElement).value;
-                if (email) {
-                  document
-                    .getElementById("waitlist-form")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                  const waitlistEmailInput = document.getElementById(
-                    "waitlist-email"
-                  ) as HTMLInputElement;
-                  if (waitlistEmailInput) {
-                    waitlistEmailInput.value = email;
-                    waitlistEmailInput.focus();
-                  }
+                setHeroError(null);
+                setIsHeroSubmitting(true);
+
+                try {
+                  const savedEmail = await saveWaitlistEmail(heroEmail);
+                  setHeroEmail("");
+                  router.push({
+                    pathname: "/crypto-ai/apply",
+                    query: { email: savedEmail },
+                  });
+                } catch (error: any) {
+                  console.error("Hero waitlist error:", error);
+                  setHeroError(
+                    error?.message ||
+                      "Unable to add you to the waitlist. Please try again."
+                  );
+                } finally {
+                  setIsHeroSubmitting(false);
                 }
               }}
               className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto mb-8"
@@ -109,11 +114,22 @@ export default function CryptoAIPage() {
                 required
                 variant="secondary"
                 className="flex-1 text-lg"
+                value={heroEmail}
+                onChange={(e) => setHeroEmail(e.target.value)}
+                disabled={isHeroSubmitting}
               />
-              <Button type="submit" variant="secondary">
-                Get Early Access
+              <Button
+                type="submit"
+                variant="secondary"
+                disabled={isHeroSubmitting}
+              >
+                {isHeroSubmitting ? "Adding..." : "Get Early Access"}
               </Button>
             </form>
+
+            {heroError && (
+              <p className="text-sm text-red-600 mb-4">{heroError}</p>
+            )}
 
             <p className="text-sm text-gray-900">
               Join the waitlist • Get early access
@@ -271,11 +287,8 @@ export default function CryptoAIPage() {
 
       {/* WAITLIST FORM */}
       <div id="waitlist-form">
-        <CryptoWaitlist onSuccess={handleWaitlistSuccess} />
+        <CryptoWaitlist />
       </div>
-
-      {/* SURVEY FORM (Appears after waitlist success) */}
-      {waitlistSuccess && <CryptoSurvey email={waitlistEmail} />}
     </main>
   );
 }

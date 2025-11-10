@@ -1,6 +1,11 @@
 import { FirebaseApp, getApp, getApps, initializeApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import {
+  connectFirestoreEmulator,
+  Firestore,
+  getFirestore,
+} from "firebase/firestore";
+import {
   connectFunctionsEmulator,
   Functions,
   getFunctions,
@@ -8,6 +13,7 @@ import {
 
 let app: FirebaseApp;
 let functions: Functions;
+let firestore: Firestore;
 
 const getFirebaseConfig = async () => {
   if (typeof window !== "undefined" && window.fetch) {
@@ -40,31 +46,47 @@ const initializeFirebase = async () => {
   // Initialize the app (or get the existing one)
   app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
   functions = getFunctions(app, "us-west1");
+  firestore = getFirestore(app);
 
-  // Initialize App Check on the client
-  if (typeof window !== "undefined") {
-    initializeAppCheck(app, {
-      provider: new ReCaptchaV3Provider(
-        "6LdyiokrAAAAAAgeau1_Hm1YW1bact4CAS3TV_Yx"
-      ),
-      isTokenAutoRefreshEnabled: true,
-    });
+  const isClient = typeof window !== "undefined";
+  const isDevelopment = process.env.NODE_ENV === "development";
+  const shouldInitAppCheck =
+    !isDevelopment || process.env.NEXT_PUBLIC_ENABLE_APPCHECK === "true";
 
-    // Connect to emulators in development
-    if (process.env.NODE_ENV === "development") {
+  if (isClient) {
+    if (shouldInitAppCheck) {
+      try {
+        initializeAppCheck(app, {
+          provider: new ReCaptchaV3Provider(
+            "6LdyiokrAAAAAAgeau1_Hm1YW1bact4CAS3TV_Yx"
+          ),
+          isTokenAutoRefreshEnabled: true,
+        });
+      } catch (error) {
+        console.warn("Firebase App Check initialization skipped:", error);
+      }
+    }
+
+    if (isDevelopment) {
       try {
         connectFunctionsEmulator(functions, "localhost", 5001);
       } catch (error) {
         console.log("Functions emulator connection skipped: ", error);
       }
+
+      try {
+        connectFirestoreEmulator(firestore, "localhost", 8080);
+      } catch (error) {
+        console.log("Firestore emulator connection skipped: ", error);
+      }
     }
   }
 
-  return { app, functions };
+  return { app, functions, firestore };
 };
 
 // To use in your components, you'll need to handle the promise.
 // We export the promise itself to be awaited in other modules.
 const firebasePromise = initializeFirebase();
 
-export { firebasePromise, functions };
+export { firebasePromise, firestore, functions };
