@@ -12,6 +12,7 @@ export const saveWaitlistEmail = async (rawEmail: string) => {
   const docRef = await addDoc(collection(firestore, "crypto-waitlist"), {
     email: trimmedEmail,
     createdAt: serverTimestamp(),
+    surveySubmitted: false,
   });
 
   if (process.env.NODE_ENV === "development") {
@@ -22,5 +23,8 @@ export const saveWaitlistEmail = async (rawEmail: string) => {
     );
   }
 
-  return trimmedEmail;
+  return {
+    email: trimmedEmail,
+    id: docRef.id,
+  };
 };

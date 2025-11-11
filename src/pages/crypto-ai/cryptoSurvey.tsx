@@ -1,31 +1,40 @@
-import React, { FC, useState } from "react";
+import { firebasePromise } from "@/lib/firebase";
+import React, { FC, useMemo, useState } from "react";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  query,
+  serverTimestamp,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 interface CryptoSurveyProps {
   email: string;
+  waitlistId?: string;
 }
 
-export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
+export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email, waitlistId }) => {
   const [formData, setFormData] = useState({
-    // Q1: Trading style
-    tradingStyle: "",
-    // Q2: Trading experience
+    // Preferred name
+    preferredName: "",
+    // Q1: Trading experience
     tradingExperience: "",
-    // Q3: Paid tools (checkboxes with amounts)
+    // Q2: Paid tools (checkboxes with product names)
     paidTools: {
-      tradingBots: { checked: false, amount: "" },
-      premiumSignals: { checked: false, amount: "" },
-      analyticsPlatforms: { checked: false, amount: "" },
-      newsSubscriptions: { checked: false, amount: "" },
-      other: { checked: false, text: "" },
+      tradingBots: { checked: false, products: "" },
+      premiumSignals: { checked: false, products: "" },
+      analyticsPlatforms: { checked: false, products: "" },
+      newsSubscriptions: { checked: false, products: "" },
+      other: { checked: false, products: "" },
       nothing: false,
     },
-    // Q4: Monthly budget
+    // Q3: Monthly budget
     monthlyBudget: "",
-    // Q5: Cancel reason
-    cancelReason: "",
-    // Q6: Lost money story
-    lostMoneyStory: "",
-    // Q7: Stay updated ranking (1-5 for each)
+    // Q4: Stay updated frequency
     stayUpdatedRanking: {
       twitter: "",
       discordTelegram: "",
@@ -34,23 +43,29 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
       podcastsYouTube: "",
       tradingPlatformFeeds: "",
     },
-    // Q8: Biggest frustration
-    biggestFrustration: "",
-    biggestFrustrationOther: "",
-    // Q9: Perfect assistant
+    // Q5: Frustrations (checkboxes)
+    frustrations: {
+      tooMuchNoise: false,
+      infoTooLate: false,
+      cantVerify: false,
+      dontUnderstand: false,
+      missWhenAway: false,
+      other: "",
+    },
+    // Q6: Perfect assistant
     perfectAssistant: "",
-    // Q10: When need news (checkboxes)
+    // Q7: When need news (checkboxes)
     whenNeedNews: {
+      discoverNewProjects: false,
+      specificCoinsMentioned: false,
       beforeMarketEvents: false,
       duringVolatility: false,
-      specificCoinsMentioned: false,
-      technicalUpdates: false,
-      macroEconomic: false,
-      always24_7: false,
+      other: false,
+      otherDetails: "",
     },
-    // Q11: Alert speed
+    // Q8: Alert speed
     alertSpeed: "",
-    // Q12: Feature ranking (1-6)
+    // Q9: Feature ranking (1-6)
     featureRanking: {
       instantAlerts: "",
       aiSummary: "",
@@ -59,24 +74,26 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
       sourceCredibility: "",
       sentimentAnalysis: "",
     },
-    // Q13: Would pay $50 for (checkboxes)
+    // Q10: Would pay $50 for (checkboxes)
     wouldPay50: {
       alertsFaster: false,
+      summarizeTrends: false,
       aiExplainsPortfolio: false,
       filtersNoise: false,
       verifiedSources: false,
       none: false,
     },
-    // Q14: Would buy at $29/mo
+    // Q11: Would buy at $29/mo
     buyAt29: "",
-    // Q15: Right price
+    // Q12: Right price
     rightPrice: "",
-    // Q16: Pay $99 today
+    // Q13: Pay $99 today
     pay99Today: "",
     pay99Email: "",
-    // Q17: Follow-up interview
+    // Q14: Follow-up interview
     followUpInterview: "",
     followUpEmail: "",
+    recommendedTraders: [{ name: "", contact: "" }],
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -86,6 +103,65 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
   } | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const paidToolOptions = [
+    { key: "tradingBots", label: "Trading bots" },
+    { key: "premiumSignals", label: "Premium signals or alerts" },
+    { key: "analyticsPlatforms", label: "Analytics platforms" },
+    { key: "newsSubscriptions", label: "News subscriptions" },
+    { key: "other", label: "Other tools" },
+  ] as const;
+
+  const hasCoreWhenNeedNewsSelection = useMemo(() => {
+    const selection = formData.whenNeedNews;
+    return (
+      selection.discoverNewProjects ||
+      selection.specificCoinsMentioned ||
+      selection.beforeMarketEvents ||
+      selection.duringVolatility
+    );
+  }, [formData.whenNeedNews]);
+
+  const handleRecommendedChange = (
+    index: number,
+    field: "name" | "contact",
+    value: string
+  ) => {
+    setFormData((prev) => {
+      const updated = [...prev.recommendedTraders];
+      updated[index] = {
+        ...updated[index],
+        [field]: value,
+      };
+
+      const isLast = index === updated.length - 1;
+      const hasContent =
+        updated[index].name.trim() !== "" || updated[index].contact.trim() !== "";
+      if (isLast && hasContent && updated.length < 5) {
+        updated.push({ name: "", contact: "" });
+      }
+
+      // remove trailing empty entries beyond first
+      let cleaned = updated;
+      for (let i = cleaned.length - 1; i > 0; i--) {
+        if (
+          cleaned[i].name.trim() === "" &&
+          cleaned[i].contact.trim() === "" &&
+          (cleaned[i - 1].name.trim() === "" &&
+            cleaned[i - 1].contact.trim() === "")
+        ) {
+          cleaned = cleaned.slice(0, i);
+        } else {
+          break;
+        }
+      }
+
+      return {
+        ...prev,
+        recommendedTraders: cleaned,
+      };
+    });
+  };
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -94,41 +170,7 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
-    if (name.startsWith("paidTools.")) {
-      const toolKey = name.split(".")[1];
-      if (toolKey === "amount" || toolKey === "text") {
-        const parentKey = name.split(".")[0] + "." + name.split(".")[1];
-        setFormData((prev) => ({
-          ...prev,
-          paidTools: {
-            ...prev.paidTools,
-            [parentKey.split(".")[1]]: {
-              ...(prev.paidTools[
-                parentKey.split(".")[1] as keyof typeof prev.paidTools
-              ] as any),
-              [toolKey]: value,
-            },
-          },
-        }));
-      } else {
-        setFormData((prev) => ({
-          ...prev,
-          paidTools: {
-            ...prev.paidTools,
-            [toolKey]:
-              toolKey === "nothing"
-                ? checked
-                : {
-                    checked,
-                    amount:
-                      toolKey === "other"
-                        ? prev.paidTools.other?.text || ""
-                        : "",
-                  },
-          },
-        }));
-      }
-    } else if (name.startsWith("stayUpdatedRanking.")) {
+    if (name.startsWith("stayUpdatedRanking.")) {
       const source = name.split(".")[1];
       setFormData((prev) => ({
         ...prev,
@@ -139,13 +181,24 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
       }));
     } else if (name.startsWith("whenNeedNews.")) {
       const when = name.split(".")[1];
-      setFormData((prev) => ({
-        ...prev,
-        whenNeedNews: {
-          ...prev.whenNeedNews,
-          [when]: checked,
-        },
-      }));
+      if (when === "otherDetails") {
+        setFormData((prev) => ({
+          ...prev,
+          whenNeedNews: {
+            ...prev.whenNeedNews,
+            otherDetails: value,
+          },
+        }));
+      } else {
+        setFormData((prev) => ({
+          ...prev,
+          whenNeedNews: {
+            ...prev.whenNeedNews,
+            [when]: checked,
+            ...(when === "other" && !checked ? { otherDetails: "" } : {}),
+          },
+        }));
+      }
     } else if (name.startsWith("featureRanking.")) {
       const feature = name.split(".")[1];
       setFormData((prev) => ({
@@ -175,26 +228,28 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    // Q1 & Q2: Required
-    if (!formData.tradingStyle) newErrors.tradingStyle = "Required";
+    // Preferred name
+    if (!formData.preferredName.trim()) {
+      newErrors.preferredName = "Required";
+    }
+
+    // Q1: Required
     if (!formData.tradingExperience) newErrors.tradingExperience = "Required";
 
-    // Q7: Ranking validation (1-5, no duplicates)
-    const rankings = Object.values(formData.stayUpdatedRanking).filter(
-      (v) => v
-    );
-    const rankingSet = new Set(rankings);
-    if (rankings.length > 0 && rankings.length !== rankingSet.size) {
-      newErrors.stayUpdatedRanking = "Each ranking must be unique";
+    const otherDetailsValue = formData.whenNeedNews.otherDetails.trim();
+    if (
+      !hasCoreWhenNeedNewsSelection &&
+      !formData.whenNeedNews.other &&
+      !otherDetailsValue
+    ) {
+      newErrors.whenNeedNews =
+        "Choose at least one scenario or describe your own.";
     }
-    const invalidRankings = rankings.filter(
-      (r) => !["1", "2", "3", "4", "5", "6"].includes(r)
-    );
-    if (invalidRankings.length > 0) {
-      newErrors.stayUpdatedRanking = "Rankings must be between 1-6";
+    if (formData.whenNeedNews.other && !otherDetailsValue) {
+      newErrors.whenNeedNews = "Tell us what other situations you have in mind.";
     }
 
-    // Q12: Feature ranking validation (1-6, no duplicates)
+    // Q9: Feature ranking validation (1-6, no duplicates)
     const featureRankings = Object.values(formData.featureRanking).filter(
       (v) => v
     );
@@ -212,15 +267,28 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
       newErrors.featureRanking = "Rankings must be between 1-6";
     }
 
-    // Q16 & Q17: Email if "Yes" selected
-    if (formData.pay99Today === "yes" && !formData.pay99Email) {
+    // Q15 & Q16: Email if "Yes" selected
+    if (
+      formData.pay99Today === "yes" &&
+      !formData.pay99Email.trim()
+    ) {
       newErrors.pay99Email = "Email required";
     }
-    if (
-      formData.followUpInterview === "yes" &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.followUpEmail)
-    ) {
-      newErrors.followUpEmail = "Valid email required";
+    if (formData.followUpInterview === "yes") {
+      const followUpEmailTrimmed = formData.followUpEmail.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(followUpEmailTrimmed)) {
+        newErrors.followUpEmail = "Valid email required";
+      }
+    }
+
+    const invalidRecommendations = formData.recommendedTraders.some((entry) => {
+      const nameFilled = entry.name.trim() !== "";
+      const contactFilled = entry.contact.trim() !== "";
+      return (nameFilled && !contactFilled) || (!nameFilled && contactFilled);
+    });
+    if (invalidRecommendations) {
+      newErrors.recommendedTraders =
+        "Please provide both name and contact for each recommended trader.";
     }
 
     setErrors(newErrors);
@@ -242,22 +310,75 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
     setSubmitStatus(null);
 
     try {
-      // TODO: Replace with actual API endpoint
-      const response = await fetch("/api/crypto-survey", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          name,
-          surveyData: formData,
-        }),
-      });
+      const normalizedEmail = email.trim().toLowerCase();
+      const { firestore } = await firebasePromise;
 
-      if (!response.ok) {
-        throw new Error("Failed to submit survey");
+      let waitlistDocRef =
+        waitlistId && waitlistId.length > 0
+          ? doc(firestore, "crypto-waitlist", waitlistId)
+          : null;
+
+      if (waitlistDocRef) {
+        const existing = await getDoc(waitlistDocRef);
+        if (!existing.exists()) {
+          waitlistDocRef = null;
+        }
       }
+
+      if (!waitlistDocRef) {
+        const waitlistQuery = query(
+          collection(firestore, "crypto-waitlist"),
+          where("email", "==", normalizedEmail),
+          limit(1)
+        );
+        const snapshot = await getDocs(waitlistQuery);
+        if (!snapshot.empty) {
+          waitlistDocRef = snapshot.docs[0].ref;
+        }
+      }
+
+      if (!waitlistDocRef) {
+        throw new Error(
+          "We couldn't find your waitlist entry. Please rejoin the waitlist and try again."
+        );
+      }
+
+      const {
+        preferredName,
+        recommendedTraders,
+        ...surveyResponsesRest
+      } = formData;
+      const sanitizedSurvey = {
+        ...surveyResponsesRest,
+        perfectAssistant: surveyResponsesRest.perfectAssistant.trim(),
+        frustrations: {
+          ...surveyResponsesRest.frustrations,
+          other: surveyResponsesRest.frustrations.other.trim(),
+        },
+        whenNeedNews: {
+          ...surveyResponsesRest.whenNeedNews,
+          otherDetails: surveyResponsesRest.whenNeedNews.otherDetails.trim(),
+        },
+        followUpEmail: surveyResponsesRest.followUpEmail.trim(),
+        recommendedTraders: recommendedTraders
+          .map((entry) => ({
+            name: entry.name.trim(),
+            contact: entry.contact.trim(),
+          }))
+          .filter((entry) => entry.name !== "" && entry.contact !== ""),
+      };
+
+      await setDoc(
+        waitlistDocRef,
+        {
+          email: normalizedEmail,
+          preferredName: preferredName.trim(),
+          surveyResponses: sanitizedSurvey,
+          surveySubmittedAt: serverTimestamp(),
+          surveySubmitted: true,
+        },
+        { merge: true }
+      );
 
       setSubmitStatus({
         type: "success",
@@ -269,6 +390,7 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
       setSubmitStatus({
         type: "error",
         message:
+          error?.message ||
           "Unable to submit your survey at the moment. Please try again later.",
       });
     } finally {
@@ -289,58 +411,36 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Q1: Trading Style */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                1. How do you currently trade/invest in crypto? *
+                How may we call you? *
               </label>
-              <div className="space-y-2">
-                {[
-                  {
-                    value: "day-trader",
-                    label: "Day trader (multiple trades/day)",
-                  },
-                  {
-                    value: "swing-trader",
-                    label: "Swing trader (hold days/weeks)",
-                  },
-                  { value: "long-term", label: "Long-term holder" },
-                  { value: "researching", label: "Just researching/learning" },
-                ].map((option) => (
-                  <label
-                    key={option.value}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="radio"
-                      name="tradingStyle"
-                      value={option.value}
-                      checked={formData.tradingStyle === option.value}
-                      onChange={handleChange}
-                      className="w-4 h-4"
-                    />
-                    <span>{option.label}</span>
-                  </label>
-                ))}
-              </div>
-              {errors.tradingStyle && (
+              <input
+                type="text"
+                name="preferredName"
+                value={formData.preferredName}
+                onChange={handleChange}
+                placeholder="Preferred name or nickname"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors"
+              />
+              {errors.preferredName && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.tradingStyle}
+                  {errors.preferredName}
                 </p>
               )}
             </div>
 
-            {/* Q2: Trading Experience */}
+            {/* Q1: Trading Experience */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                2. How long trading crypto? *
+                1. How long trading crypto? *
               </label>
-              <div className="flex flex-wrap gap-4">
+              <div className="space-y-2">
                 {[
-                  { value: "less-6mo", label: "< 6 months" },
-                  { value: "6mo-2yr", label: "6mo-2yr" },
-                  { value: "2-5yr", label: "2-5yr" },
-                  { value: "5yr-plus", label: "5yr+" },
+                  { value: "less-6-months", label: "Less than 6 months" },
+                  { value: "6-to-24-months", label: "6 to 24 months" },
+                  { value: "24-to-60-months", label: "24 to 60 months" },
+                  { value: "60-plus-months", label: "More than 60 months" },
                 ].map((option) => (
                   <label
                     key={option.value}
@@ -365,141 +465,133 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
               )}
             </div>
 
-            {/* Q3: Paid Tools */}
+            {/* Q2: Paid Tools */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                3. What tools do you PAY for right now? (check all)
+                2. What tools do you PAY for right now? (check all that apply and list the products)
               </label>
-              <div className="space-y-3">
-                {[
-                  { key: "tradingBots", label: "Trading bots" },
-                  { key: "premiumSignals", label: "Premium signals/alerts" },
-                  { key: "analyticsPlatforms", label: "Analytics platforms" },
-                  { key: "newsSubscriptions", label: "News subscriptions" },
-                ].map((tool) => {
+              <div className="space-y-4">
+                {paidToolOptions.map((tool) => {
                   const toolData =
                     formData.paidTools[
                       tool.key as keyof typeof formData.paidTools
                     ];
                   const isChecked =
-                    typeof toolData === "object" && toolData.checked;
-                  const amount =
-                    typeof toolData === "object" && "amount" in toolData
-                      ? toolData.amount
+                    typeof toolData === "object" && "checked" in toolData
+                      ? toolData.checked
+                      : false;
+                  const products =
+                    typeof toolData === "object" && "products" in toolData
+                      ? toolData.products
                       : "";
+                  const placeholder =
+                    tool.key === "other"
+                      ? "List additional tools (comma separated)"
+                      : `List ${tool.label.toLowerCase()} (comma separated)`;
 
                   return (
-                    <label
-                      key={tool.key}
-                      className="flex items-center gap-2 cursor-pointer"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            paidTools: {
-                              ...prev.paidTools,
-                              [tool.key]: {
-                                checked: e.target.checked,
-                                amount:
-                                  typeof prev.paidTools[
-                                    tool.key as keyof typeof prev.paidTools
-                                  ] === "object"
-                                    ? (
-                                        prev.paidTools[
-                                          tool.key as keyof typeof prev.paidTools
-                                        ] as { amount: string }
-                                      ).amount
-                                    : "",
-                              },
-                            },
-                          }));
-                        }}
-                        className="w-4 h-4"
-                      />
-                      <span>{tool.label} ($___/mo)</span>
+                    <div key={tool.key} className="space-y-2">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={(e) => {
+                            const checked = e.target.checked;
+                            setFormData((prev) => {
+                              const prevTool =
+                                prev.paidTools[
+                                  tool.key as keyof typeof prev.paidTools
+                                ];
+                              const prevProducts =
+                                typeof prevTool === "object" &&
+                                "products" in prevTool
+                                  ? prevTool.products
+                                  : "";
+
+                              return {
+                                ...prev,
+                                paidTools: {
+                                  ...prev.paidTools,
+                                  [tool.key]: {
+                                    checked,
+                                    products: checked ? prevProducts : "",
+                                  },
+                                  nothing: checked ? false : prev.paidTools.nothing,
+                                },
+                              };
+                            });
+                          }}
+                          className="w-4 h-4"
+                        />
+                        <span>{tool.label}</span>
+                      </label>
                       {isChecked && (
                         <input
                           type="text"
-                          value={amount}
+                          value={products}
                           onChange={(e) => {
+                            const value = e.target.value;
                             setFormData((prev) => ({
                               ...prev,
                               paidTools: {
                                 ...prev.paidTools,
                                 [tool.key]: {
                                   checked: true,
-                                  amount: e.target.value,
+                                  products: value,
                                 },
+                                nothing: false,
                               },
                             }));
                           }}
-                          placeholder="Amount"
-                          className="ml-2 px-3 py-1 border border-gray-300 rounded text-sm w-24"
+                          placeholder={placeholder}
+                          className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors"
                         />
                       )}
-                    </label>
+                    </div>
                   );
                 })}
 
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex items-center gap-2 cursor-pointer pt-2 border-t border-gray-100 mt-2">
                   <input
                     type="checkbox"
-                    checked={formData.paidTools.other.checked}
-                    onChange={(e) => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        paidTools: {
-                          ...prev.paidTools,
-                          other: {
-                            checked: e.target.checked,
-                            text: prev.paidTools.other.text,
-                          },
-                        },
-                      }));
-                    }}
-                    className="w-4 h-4"
-                  />
-                  <span>Other: </span>
-                  <input
-                    type="text"
-                    value={formData.paidTools.other.text}
-                    onChange={(e) => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        paidTools: {
-                          ...prev.paidTools,
-                          other: {
-                            checked: true,
-                            text: e.target.value,
-                          },
-                        },
-                      }));
-                    }}
-                    placeholder="Specify"
-                    className="ml-2 px-3 py-1 border border-gray-300 rounded text-sm flex-1"
-                  />
-                </label>
-
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    name="paidTools.nothing"
                     checked={formData.paidTools.nothing}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      const checked = e.target.checked;
+                      setFormData((prev) => {
+                        if (!checked) {
+                          return {
+                            ...prev,
+                            paidTools: {
+                              ...prev.paidTools,
+                              nothing: false,
+                            },
+                          };
+                        }
+
+                        return {
+                          ...prev,
+                          paidTools: {
+                            tradingBots: { checked: false, products: "" },
+                            premiumSignals: { checked: false, products: "" },
+                            analyticsPlatforms: { checked: false, products: "" },
+                            newsSubscriptions: { checked: false, products: "" },
+                            other: { checked: false, products: "" },
+                            nothing: true,
+                          },
+                        };
+                      });
+                    }}
                     className="w-4 h-4"
                   />
-                  <span>Nothing - I use only free tools</span>
+                  <span>Nothing – I use only free tools</span>
                 </label>
               </div>
             </div>
 
-            {/* Q4: Monthly Budget */}
+            {/* Q3: Monthly Budget */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                4. What's your monthly budget for crypto tools?
+                3. What's your monthly budget for crypto tools?
               </label>
               <div className="flex flex-wrap gap-4">
                 {[
@@ -527,49 +619,12 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
               </div>
             </div>
 
-            {/* Q5: Cancel Reason */}
+            {/* Q4: Stay Updated Frequency */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                5. What would make you CANCEL a paid tool immediately?
+                4. How often do you get updates from these channels?
               </label>
-              <textarea
-                name="cancelReason"
-                value={formData.cancelReason}
-                onChange={handleChange}
-                rows={3}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors resize-none"
-                placeholder="Tell us what would make you cancel..."
-              />
-            </div>
-
-            {/* Q6: Lost Money Story */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-3">
-                6. Tell me about a time you LOST MONEY because you:
-              </label>
-              <div className="text-sm text-gray-600 mb-2">
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Missed important news</li>
-                  <li>Got info too late</li>
-                  <li>Made decision on incomplete info</li>
-                </ul>
-              </div>
-              <textarea
-                name="lostMoneyStory"
-                value={formData.lostMoneyStory}
-                onChange={handleChange}
-                rows={5}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors resize-none"
-                placeholder="Share your story..."
-              />
-            </div>
-
-            {/* Q7: Stay Updated Ranking */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-3">
-                7. How do you stay updated? (rank 1-6, 1=most used)
-              </label>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {[
                   { key: "twitter", label: "Twitter/X" },
                   { key: "discordTelegram", label: "Discord/Telegram groups" },
@@ -581,94 +636,121 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
                     label: "Trading platform feeds",
                   },
                 ].map((source) => (
-                  <div key={source.key} className="flex items-center gap-3">
-                    <span className="w-48 text-sm">{source.label}</span>
-                    <select
-                      name={`stayUpdatedRanking.${source.key}`}
-                      value={
-                        formData.stayUpdatedRanking[
-                          source.key as keyof typeof formData.stayUpdatedRanking
-                        ]
-                      }
-                      onChange={handleChange}
-                      className="px-3 py-1 border border-gray-300 rounded text-sm"
-                    >
-                      <option value="">-</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                    </select>
+                  <div
+                    key={source.key}
+                    className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+                  >
+                    <p className="text-sm font-medium text-gray-800 min-w-[160px]">
+                      {source.label}
+                    </p>
+                    <div className="flex flex-wrap gap-4">
+                      {[
+                        { value: "very-active", label: "Actively" },
+                        { value: "sometimes", label: "Sometimes" },
+                        { value: "rarely", label: "Not really" },
+                      ].map((option) => (
+                        <label
+                          key={option.value}
+                          className="inline-flex min-w-[140px] items-center gap-2 cursor-pointer text-sm text-gray-700"
+                        >
+                          <input
+                            type="radio"
+                            name={`stayUpdatedRanking.${source.key}`}
+                            value={option.value}
+                            checked={
+                              formData.stayUpdatedRanking[
+                                source.key as keyof typeof formData.stayUpdatedRanking
+                              ] === option.value
+                            }
+                            onChange={handleChange}
+                            className="w-4 h-4"
+                          />
+                          <span>{option.label}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
-              {errors.stayUpdatedRanking && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.stayUpdatedRanking}
-                </p>
-              )}
             </div>
 
-            {/* Q8: Biggest Frustration */}
+            {/* Q5: Frustrations */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                8. Biggest frustration with current approach?
+                5. What are your frustrations with staying on top of crypto news? (select all that apply)
               </label>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {[
-                  { value: "too-much-noise", label: "Too much noise/spam" },
+                  { key: "tooMuchNoise", label: "Too much noise or spam" },
+                  { key: "infoTooLate", label: "Information arrives too late" },
+                  { key: "cantVerify", label: "Hard to verify if news is real" },
                   {
-                    value: "info-too-late",
-                    label: "Information comes too late",
+                    key: "dontUnderstand",
+                    label: "Not sure what the news means for prices",
                   },
                   {
-                    value: "cant-verify",
-                    label: "Can't verify if news is real",
+                    key: "missWhenAway",
+                    label: "Miss updates when I’m busy or sleeping",
                   },
-                  {
-                    value: "dont-understand",
-                    label: "Don't understand what news means for prices",
-                  },
-                  {
-                    value: "miss-when-sleeping",
-                    label: "Miss news when sleeping/busy",
-                  },
-                  { value: "other", label: "Other" },
                 ].map((option) => (
                   <label
-                    key={option.value}
+                    key={option.key}
                     className="flex items-center gap-2 cursor-pointer"
                   >
                     <input
-                      type="radio"
-                      name="biggestFrustration"
-                      value={option.value}
-                      checked={formData.biggestFrustration === option.value}
-                      onChange={handleChange}
+                      type="checkbox"
+                      checked={
+                        formData.frustrations[
+                          option.key as keyof typeof formData.frustrations
+                        ] === true
+                      }
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setFormData((prev) => ({
+                          ...prev,
+                          frustrations: {
+                            ...prev.frustrations,
+                            [option.key]: checked,
+                            other:
+                              option.key === "other" && !checked
+                                ? ""
+                                : prev.frustrations.other,
+                          },
+                        }));
+                      }}
                       className="w-4 h-4"
                     />
                     <span>{option.label}</span>
                   </label>
                 ))}
+                <label className="flex flex-col gap-2">
+                  <span className="text-sm text-gray-700">
+                    Other frustrations?
+                  </span>
+                  <input
+                    type="text"
+                    value={formData.frustrations.other}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData((prev) => ({
+                        ...prev,
+                        frustrations: {
+                          ...prev.frustrations,
+                          other: value,
+                        },
+                      }));
+                    }}
+                    placeholder="Describe anything else that frustrates you"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors"
+                  />
+                </label>
               </div>
-              {formData.biggestFrustration === "other" && (
-                <input
-                  type="text"
-                  name="biggestFrustrationOther"
-                  value={formData.biggestFrustrationOther}
-                  onChange={handleChange}
-                  placeholder="Please specify"
-                  className="mt-3 w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors"
-                />
-              )}
             </div>
 
-            {/* Q9: Perfect Assistant */}
+            {/* Q6: Perfect Assistant */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                9. Imagine your PERFECT news assistant. What does it do?
+                6. Imagine your perfect AI crypto trading assistant. What does it do?
               </label>
               <textarea
                 name="perfectAssistant"
@@ -680,31 +762,26 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
               />
             </div>
 
-            {/* Q10: When Need News */}
+            {/* Q7: When Need News */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                10. When do you MOST need crypto news?
+                7. When do you MOST need crypto news?
               </label>
               <div className="space-y-2">
                 {[
+                  {
+                    key: "discoverNewProjects",
+                    label: "Discover new blockchain projects",
+                  },
+                  {
+                    key: "specificCoinsMentioned",
+                    label: "Follow up on coins I'm interested in",
+                  },
                   {
                     key: "beforeMarketEvents",
                     label: "Before market-moving events (Fed, regulations)",
                   },
                   { key: "duringVolatility", label: "During high volatility" },
-                  {
-                    key: "specificCoinsMentioned",
-                    label: "When specific coins I hold are mentioned",
-                  },
-                  {
-                    key: "technicalUpdates",
-                    label: "Technical updates (protocol changes)",
-                  },
-                  { key: "macroEconomic", label: "Macro economic news" },
-                  {
-                    key: "always24_7",
-                    label: "24/7, I never want to miss anything",
-                  },
                 ].map((option) => (
                   <label
                     key={option.key}
@@ -716,7 +793,7 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
                       checked={
                         formData.whenNeedNews[
                           option.key as keyof typeof formData.whenNeedNews
-                        ]
+                        ] === true
                       }
                       onChange={handleChange}
                       className="w-4 h-4"
@@ -724,13 +801,46 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
                     <span>{option.label}</span>
                   </label>
                 ))}
+                <div className="pt-2 space-y-3">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="whenNeedNews.other"
+                      checked={formData.whenNeedNews.other === true}
+                      onChange={handleChange}
+                      className="w-4 h-4"
+                    />
+                    <span>Other (please specify)</span>
+                  </label>
+                  {(formData.whenNeedNews.other ||
+                    !hasCoreWhenNeedNewsSelection) && (
+                    <textarea
+                      name="whenNeedNews.otherDetails"
+                      value={formData.whenNeedNews.otherDetails}
+                      onChange={handleChange}
+                      rows={4}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors"
+                      placeholder="Describe the situations when you most need crypto news."
+                    />
+                  )}
+                  {!hasCoreWhenNeedNewsSelection && (
+                    <p className="text-xs text-gray-500">
+                      Tell us when you need updates if none of the options above fit.
+                    </p>
+                  )}
+                </div>
+                {errors.whenNeedNews && (
+                  <p className="text-red-500 text-sm">
+                    {errors.whenNeedNews}
+                  </p>
+                )}
               </div>
             </div>
 
-            {/* Q11: Alert Speed */}
+            {/* Q8: Alert Speed */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                11. How fast is "fast enough" for alerts?
+                8. How fast is "fast enough" for alerts?
               </label>
               <div className="space-y-2">
                 {[
@@ -757,10 +867,10 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
               </div>
             </div>
 
-            {/* Q12: Feature Ranking */}
+            {/* Q9: Feature Ranking */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                12. Rank these features (1=most valuable to 6=least)
+                9. Rank these features (1=most valuable to 6=least)
               </label>
               <div className="space-y-3">
                 {[
@@ -781,26 +891,35 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
                       "Sentiment analysis (is crypto Twitter bullish/bearish?)",
                   },
                 ].map((feature) => (
-                  <div key={feature.key} className="flex items-center gap-3">
-                    <span className="w-64 text-sm">{feature.label}</span>
-                    <select
-                      name={`featureRanking.${feature.key}`}
-                      value={
-                        formData.featureRanking[
-                          feature.key as keyof typeof formData.featureRanking
-                        ]
-                      }
-                      onChange={handleChange}
-                      className="px-3 py-1 border border-gray-300 rounded text-sm"
-                    >
-                      <option value="">-</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                    </select>
+                  <div
+                    key={feature.key}
+                    className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+                  >
+                    <span className="text-sm font-medium text-gray-800 min-w-[200px]">
+                      {feature.label}
+                    </span>
+                    <div className="flex flex-wrap gap-3 justify-end">
+                      {[1, 2, 3, 4, 5, 6].map((rank) => (
+                        <label
+                          key={rank}
+                          className="inline-flex items-center gap-2 cursor-pointer text-sm text-gray-700 min-w-[48px] justify-center"
+                        >
+                          <input
+                            type="radio"
+                            name={`featureRanking.${feature.key}`}
+                            value={rank}
+                            checked={
+                              formData.featureRanking[
+                                feature.key as keyof typeof formData.featureRanking
+                              ] === String(rank)
+                            }
+                            onChange={handleChange}
+                            className="w-4 h-4"
+                          />
+                          <span>{rank}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -811,16 +930,20 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
               )}
             </div>
 
-            {/* Q13: Would Pay $50 */}
+            {/* Q10: Would Pay $50 */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                13. Which would you pay $50/month for? (check all)
+                10. Which would you pay $50/month for? (check all)
               </label>
               <div className="space-y-2">
                 {[
                   {
                     key: "alertsFaster",
                     label: "Alerts 5 minutes faster than free sources",
+                  },
+                  {
+                    key: "summarizeTrends",
+                    label: "Summarize Twitter, YouTube, and other trending updates",
                   },
                   {
                     key: "aiExplainsPortfolio",
@@ -857,10 +980,10 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
               </div>
             </div>
 
-            {/* Q14: Buy at $29 */}
+            {/* Q11: Buy at $29 */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                14. If we launched next month at $29/mo, would you:
+                11. If we launched next month at $29/month, would you:
               </label>
               <div className="space-y-2">
                 {[
@@ -888,19 +1011,19 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
               </div>
             </div>
 
-            {/* Q15: Right Price */}
+            {/* Q12: Right Price */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                15. What price feels RIGHT for this?
+                12. What price feels RIGHT for this?
               </label>
               <div className="flex flex-wrap gap-4">
                 {[
                   { value: "free", label: "Free only" },
-                  { value: "10", label: "$10/mo" },
-                  { value: "25", label: "$25/mo" },
-                  { value: "50", label: "$50/mo" },
-                  { value: "100", label: "$100/mo" },
-                  { value: "200-plus", label: "$200+/mo" },
+                  { value: "10", label: "$10/month" },
+                  { value: "25", label: "$25/month" },
+                  { value: "50", label: "$50/month" },
+                  { value: "100", label: "$100/month" },
+                  { value: "200-plus", label: "$200+/month" },
                 ].map((option) => (
                   <label
                     key={option.value}
@@ -920,10 +1043,10 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
               </div>
             </div>
 
-            {/* Q16: Pay $99 Today */}
+            {/* Q13: Pay $99 Today */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                16. Would you pay $99 TODAY for lifetime access?
+                13. Would you pay $99 TODAY for lifetime access?
               </label>
               <div className="space-y-2">
                 {[
@@ -966,10 +1089,9 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
               )}
             </div>
 
-            {/* Q17: Follow-up Interview */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                17. Can we email you for 15-min follow-up interview?
+                14. Can we email you for a 15-minute follow-up interview?
               </label>
               <div className="space-y-2">
                 {[
@@ -1011,6 +1133,48 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
               )}
             </div>
 
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-3">
+                Would you recommend other crypto traders to try this? (optional)
+              </label>
+              <p className="text-sm text-gray-600 mb-4">
+                Add their name and email or mobile number. We’ll reveal more rows
+                automatically.
+              </p>
+              <div className="space-y-3">
+                {formData.recommendedTraders.map((entry, index) => (
+                  <div
+                    key={index}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4"
+                  >
+                    <input
+                      type="text"
+                      value={entry.name}
+                      onChange={(e) =>
+                        handleRecommendedChange(index, "name", e.target.value)
+                      }
+                      placeholder="Trader name"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors"
+                    />
+                    <input
+                      type="text"
+                      value={entry.contact}
+                      onChange={(e) =>
+                        handleRecommendedChange(index, "contact", e.target.value)
+                      }
+                      placeholder="Email or mobile number"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors"
+                    />
+                  </div>
+                ))}
+              </div>
+              {errors.recommendedTraders && (
+                <p className="text-red-500 text-sm mt-2">
+                  {errors.recommendedTraders}
+                </p>
+              )}
+            </div>
+
             {/* Submit Button */}
             {submitStatus && (
               <div
@@ -1039,3 +1203,4 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email }) => {
     </section>
   );
 };
+

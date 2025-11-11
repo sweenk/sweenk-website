@@ -6,6 +6,7 @@ import { CryptoSurvey } from "./cryptoSurvey";
 export default function CryptoAIApplicationPage() {
   const router = useRouter();
   const [prefilledEmail, setPrefilledEmail] = useState("");
+  const [waitlistId, setWaitlistId] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (!router.isReady) {
@@ -13,10 +14,14 @@ export default function CryptoAIApplicationPage() {
     }
 
     const queryEmail = router.query.email;
+    const queryWaitlistId = router.query.waitlistId;
     if (typeof queryEmail === "string") {
       setPrefilledEmail(queryEmail);
     }
-  }, [router.isReady, router.query.email]);
+    if (typeof queryWaitlistId === "string") {
+      setWaitlistId(queryWaitlistId);
+    }
+  }, [router.isReady, router.query.email, router.query.waitlistId]);
 
   const cryptoMenuItems = useMemo(
     () => [
@@ -48,7 +53,7 @@ export default function CryptoAIApplicationPage() {
         </div>
       </section>
 
-      <CryptoSurvey email={prefilledEmail} />
+      <CryptoSurvey email={prefilledEmail} waitlistId={waitlistId} />
     </main>
   );
 }

@@ -89,11 +89,12 @@ export default function CryptoAIPage() {
                 setIsHeroSubmitting(true);
 
                 try {
-                  const savedEmail = await saveWaitlistEmail(heroEmail);
+                  const { email: savedEmail, id: waitlistId } =
+                    await saveWaitlistEmail(heroEmail);
                   setHeroEmail("");
                   router.push({
                     pathname: "/crypto-ai/apply",
-                    query: { email: savedEmail },
+                    query: { email: savedEmail, waitlistId },
                   });
                 } catch (error: any) {
                   console.error("Hero waitlist error:", error);

@@ -20,11 +20,13 @@ export const CryptoWaitlist: FC = () => {
     setMessage(null);
 
     try {
-      const savedEmail = await saveWaitlistEmail(email);
+      const { email: savedEmail, id: waitlistId } = await saveWaitlistEmail(
+        email
+      );
       setEmail("");
       router.push({
         pathname: "/crypto-ai/apply",
-        query: { email: savedEmail },
+        query: { email: savedEmail, waitlistId },
       });
     } catch (error: any) {
       console.error("Waitlist Error:", error);
