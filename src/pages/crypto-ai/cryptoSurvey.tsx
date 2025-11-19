@@ -1,5 +1,4 @@
 import { firebasePromise } from "@/lib/firebase";
-import React, { FC, useMemo, useState } from "react";
 import {
   collection,
   doc,
@@ -11,6 +10,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
+import React, { FC, useMemo, useState } from "react";
 
 interface CryptoSurveyProps {
   email: string;
@@ -89,10 +89,8 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email, waitlistId }) => {
     rightPrice: "",
     // Q13: Pay $99 today
     pay99Today: "",
-    pay99Email: "",
     // Q14: Follow-up interview
     followUpInterview: "",
-    followUpEmail: "",
     recommendedTraders: [{ name: "", contact: "" }],
   });
 
@@ -249,17 +247,10 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email, waitlistId }) => {
       newErrors.whenNeedNews = "Tell us what other situations you have in mind.";
     }
 
-    // Q9: Feature ranking validation (1-6, no duplicates)
+    // Q9: Feature ranking validation (1-6, duplicates allowed)
     const featureRankings = Object.values(formData.featureRanking).filter(
       (v) => v
     );
-    const featureRankingSet = new Set(featureRankings);
-    if (
-      featureRankings.length > 0 &&
-      featureRankings.length !== featureRankingSet.size
-    ) {
-      newErrors.featureRanking = "Each ranking must be unique";
-    }
     const invalidFeatureRankings = featureRankings.filter(
       (r) => !["1", "2", "3", "4", "5", "6"].includes(r)
     );
@@ -267,19 +258,7 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email, waitlistId }) => {
       newErrors.featureRanking = "Rankings must be between 1-6";
     }
 
-    // Q15 & Q16: Email if "Yes" selected
-    if (
-      formData.pay99Today === "yes" &&
-      !formData.pay99Email.trim()
-    ) {
-      newErrors.pay99Email = "Email required";
-    }
-    if (formData.followUpInterview === "yes") {
-      const followUpEmailTrimmed = formData.followUpEmail.trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(followUpEmailTrimmed)) {
-        newErrors.followUpEmail = "Valid email required";
-      }
-    }
+    
 
     const invalidRecommendations = formData.recommendedTraders.some((entry) => {
       const nameFilled = entry.name.trim() !== "";
@@ -359,7 +338,6 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email, waitlistId }) => {
           ...surveyResponsesRest.whenNeedNews,
           otherDetails: surveyResponsesRest.whenNeedNews.otherDetails.trim(),
         },
-        followUpEmail: surveyResponsesRest.followUpEmail.trim(),
         recommendedTraders: recommendedTraders
           .map((entry) => ({
             name: entry.name.trim(),
@@ -933,7 +911,7 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email, waitlistId }) => {
             {/* Q10: Would Pay $50 */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-3">
-                10. Which would you pay $50/month for? (check all)
+                10. Which would you pay $50/month for? (check all that apply)
               </label>
               <div className="space-y-2">
                 {[
@@ -1070,23 +1048,6 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email, waitlistId }) => {
                   </label>
                 ))}
               </div>
-              {formData.pay99Today === "yes" && (
-                <div className="mt-3">
-                  <input
-                    type="email"
-                    name="pay99Email"
-                    value={formData.pay99Email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors"
-                  />
-                  {errors.pay99Email && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.pay99Email}
-                    </p>
-                  )}
-                </div>
-              )}
             </div>
 
             <div>
@@ -1114,23 +1075,6 @@ export const CryptoSurvey: FC<CryptoSurveyProps> = ({ email, waitlistId }) => {
                   </label>
                 ))}
               </div>
-              {formData.followUpInterview === "yes" && (
-                <div className="mt-3">
-                  <input
-                    type="email"
-                    name="followUpEmail"
-                    value={formData.followUpEmail}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none transition-colors"
-                  />
-                  {errors.followUpEmail && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.followUpEmail}
-                    </p>
-                  )}
-                </div>
-              )}
             </div>
 
             <div>
