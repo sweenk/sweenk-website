@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
 import { httpsCallable } from "firebase/functions";
+import React, { FC, useState } from "react";
 import { firebasePromise } from "../../lib/firebase";
 
 const navLinks = {
@@ -25,7 +25,9 @@ const navLinks = {
   ],
 };
 
-const renderNavLinks = (links: { text: string; href: string; external?: boolean }[]) => {
+const renderNavLinks = (
+  links: { text: string; href: string; external?: boolean }[]
+) => {
   return links.map((link, index) => (
     <li key={index}>
       <a
@@ -136,40 +138,55 @@ const NewsletterForm: FC = () => {
   );
 };
 
-export const Footer: FC = () => {
+interface FooterProps {
+  showSubscribe?: boolean;
+}
+
+export const Footer: FC<FooterProps> = ({ showSubscribe = true }) => {
   return (
     <footer className="relative z-10 pb-8 lg:pb-12 xl:pb-16 bg-transparent">
       <div className="max-w-6xl mx-auto px-4 sm:px-8 xl:px-0 relative pt-17.5">
         <div className="w-full h-[1px] footer-divider-gradient absolute top-0 left-0"></div>
 
         {/* Newsletter Section */}
-        <div className="mb-12">
-          <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-8">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-              <div className="max-w-[400px]">
-                <h3 className="font-semibold text-xl text-gray-900 mb-2">
-                  Stay Connected
-                </h3>
-                <p className="text-gray-700">Early updates and exclusive content</p>
-              </div>
-              <div className="flex-1 flex justify-start md:justify-end">
-                <div className="w-full md:w-auto">
-                  <NewsletterForm />
+        {showSubscribe && (
+          <div className="mb-12">
+            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-8">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+                <div className="max-w-[400px]">
+                  <h3 className="font-semibold text-xl text-gray-900 mb-2">
+                    Stay Connected
+                  </h3>
+                  <p className="text-gray-700">
+                    Early updates and exclusive content
+                  </p>
+                </div>
+                <div className="flex-1 flex justify-start md:justify-end">
+                  <div className="w-full md:w-auto">
+                    <NewsletterForm />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="flex flex-wrap gap-10 mb-12">
           {/* Logo and Feedback Column */}
           <div className="flex-1 min-w-[300px]">
             <a className="inline-block mb-4" href="/">
-              <img src="/images/logo/sweenk_logo_horizontal_monochrome.svg" alt="Logo" className="h-8" />
+              <img
+                src="/images/logo/sweenk_logo_horizontal_monochrome.svg"
+                alt="Logo"
+                className="h-8"
+              />
             </a>
             <p className="text-white/80 text-sm max-w-[280px]">
               We'd love if you chat with Sweenk for feedback, but hey,{" "}
-              <a href="/support" className="text-white/80 hover:text-white underline">
+              <a
+                href="/support"
+                className="text-white/80 hover:text-white underline"
+              >
                 our support form
               </a>{" "}
               works too!
@@ -180,7 +197,9 @@ export const Footer: FC = () => {
           <div className="flex flex-col sm:flex-row gap-8 sm:gap-16">
             {/* Policies Column */}
             <div>
-              <h5 className="font-semibold text-white mb-3 sm:mb-5">Policies</h5>
+              <h5 className="font-semibold text-white mb-3 sm:mb-5">
+                Policies
+              </h5>
               <ul className="flex flex-col gap-3.5">
                 {renderNavLinks(navLinks.policies)}
               </ul>

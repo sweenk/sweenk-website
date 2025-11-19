@@ -1,43 +1,43 @@
-import { Feedback } from "@/components/feedback/feedback";
 import { User } from "@/components/feedback/feedback.type";
+import { Header } from "@/components/header/header";
 import { FeaturesSection, HeroSection } from "@/sections";
 import { Pricing } from "@/sections/pricing/pricing";
 
 const featuresData = [
   {
-    icon: "./images/features/icon-01.svg",
+    icon: "/images/features/icon-01.svg",
     title: "Personalized Topics",
     description:
       "Content curated specifically for you based on your unique interests and preferences.",
   },
   {
-    icon: "./images/features/icon-02.svg",
+    icon: "/images/features/icon-02.svg",
     title: "Tailored Content",
     description:
       "Content delivered in a style that fits your preferences, from formality and detail level to emotional tone and engagement.",
   },
   {
-    icon: "./images/features/icon-03.svg",
+    icon: "/images/features/icon-03.svg",
     title: "Conversational",
     description:
       "Go beyond headlines—ask follow-ups, dive deeper, or get straight to what you care about.",
   },
   {
-    icon: "./images/features/icon-04.svg",
+    icon: "/images/features/icon-04.svg",
     title: "Smart Timing",
     description:
       "Updates delivered at the optimal frequency for each topic, ensuring you're always informed without feeling overwhelmed.",
     comingSoon: true,
   },
   {
-    icon: "./images/features/icon-05.svg",
+    icon: "/images/features/icon-05.svg",
     title: "Daily/Weekly Podcast",
     description:
       "Get your personalized news delivered as an AI-generated podcast, perfect for your commute or workout.",
     comingSoon: true,
   },
   {
-    icon: "./images/features/icon-06.svg",
+    icon: "/images/features/icon-06.svg",
     title: "Social Media Trends",
     description:
       "Stay ahead with real-time analysis of trending topics across social media platforms.",
@@ -105,6 +105,7 @@ const userData: User[] = [
 export default function IndexPage() {
   return (
     <main>
+      <Header />
       <HeroSection />
       <FeaturesSection
         subtitle="The Power of GPT"
