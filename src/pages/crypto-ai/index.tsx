@@ -6,8 +6,8 @@ import { StepBadge } from "@/components/stepBadge/stepBadge";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { CryptoWaitlist } from "./cryptoWaitlist";
-import { saveWaitlistEmail } from "./utils/waitlist";
+import { CryptoWaitlist } from "@/components/crypto-ai/cryptoWaitlist";
+import { saveWaitlistEmail } from "@/components/crypto-ai/utils/waitlist";
 
 export default function CryptoAIPage() {
   const router = useRouter();

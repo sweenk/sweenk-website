@@ -1,7 +1,7 @@
 import { Header } from "@/components/header/header";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import { CryptoSurvey } from "./cryptoSurvey";
+import { CryptoSurvey } from "@/components/crypto-ai/cryptoSurvey";
 
 export default function CryptoAIApplicationPage() {
   const router = useRouter();
