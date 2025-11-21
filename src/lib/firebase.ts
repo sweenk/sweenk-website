@@ -51,7 +51,7 @@ const initializeFirebase = async () => {
   const isClient = typeof window !== "undefined";
   const isDevelopment = process.env.NODE_ENV === "development";
   const shouldInitAppCheck =
-    !isDevelopment || process.env.NEXT_PUBLIC_ENABLE_APPCHECK === "true";
+    process.env.NEXT_PUBLIC_ENABLE_APPCHECK === "true";
 
   if (isClient) {
     if (shouldInitAppCheck) {
