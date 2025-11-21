@@ -50,11 +50,7 @@ const initializeFirebase = async () => {
   // Initialize the app (or get the existing one)
   app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
   functions = getFunctions(app, "us-west1");
-  // Use named database "subscribers" instead of default
   firestore = getFirestore(app, "subscribers");
-
-  console.log("[firebase] App initialized with project:", firebaseConfig.projectId);
-  console.log("[firebase] Firestore database: subscribers");
 
   const isClient = typeof window !== "undefined";
   const isDevelopment = process.env.NODE_ENV === "development";
