@@ -46,7 +46,7 @@ const initializeFirebase = async () => {
   // Initialize the app (or get the existing one)
   app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
   functions = getFunctions(app, "us-west1");
-  firestore = getFirestore(app);
+  firestore = getFirestore(app, "subscribers");
 
   const isClient = typeof window !== "undefined";
   const isDevelopment = process.env.NODE_ENV === "development";
