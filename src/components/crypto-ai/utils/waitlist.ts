@@ -15,6 +15,14 @@ export const saveWaitlistEmail = async (rawEmail: string) => {
     surveySubmitted: false,
   });
 
+  if (process.env.NODE_ENV === "development") {
+    console.info(
+      "[crypto-waitlist] saved waitlist entry",
+      docRef.id,
+      trimmedEmail
+    );
+  }
+
   return {
     email: trimmedEmail,
     id: docRef.id,
