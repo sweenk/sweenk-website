@@ -8,20 +8,19 @@ export const saveWaitlistEmail = async (rawEmail: string) => {
     throw new Error("Please enter a valid email address.");
   }
 
+  console.log("[waitlist] Starting save for:", trimmedEmail);
+
+  console.log("[waitlist] Awaiting firebasePromise...");
   const { firestore } = await firebasePromise;
+  console.log("[waitlist] Firebase initialized, saving to Firestore...");
+
   const docRef = await addDoc(collection(firestore, "crypto-waitlist"), {
     email: trimmedEmail,
     createdAt: serverTimestamp(),
     surveySubmitted: false,
   });
 
-  if (process.env.NODE_ENV === "development") {
-    console.info(
-      "[crypto-waitlist] saved waitlist entry",
-      docRef.id,
-      trimmedEmail
-    );
-  }
+  console.log("[waitlist] Saved successfully, docId:", docRef.id);
 
   return {
     email: trimmedEmail,
