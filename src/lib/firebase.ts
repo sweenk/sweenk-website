@@ -20,9 +20,7 @@ const getFirebaseConfig = async () => {
     try {
       const response = await fetch("/__/firebase/init.json");
       if (response.ok) {
-        const config = await response.json();
-        console.log("[firebase] Using config from hosting:", config);
-        return config;
+        return await response.json();
       }
     } catch (e) {
       console.error(
@@ -32,7 +30,7 @@ const getFirebaseConfig = async () => {
     }
   }
 
-  const envConfig = {
+  return {
     projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -40,8 +38,6 @@ const getFirebaseConfig = async () => {
     messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   };
-  console.log("[firebase] Using config from env:", envConfig);
-  return envConfig;
 };
 
 const initializeFirebase = async () => {
@@ -56,8 +52,6 @@ const initializeFirebase = async () => {
   const isDevelopment = process.env.NODE_ENV === "development";
   const shouldInitAppCheck =
     process.env.NEXT_PUBLIC_ENABLE_APPCHECK === "true";
-
-  console.log("[firebase] Environment:", { isClient, isDevelopment, shouldInitAppCheck });
 
   if (isClient) {
     if (shouldInitAppCheck) {
